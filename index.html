@@ -14,11 +14,13 @@
         :root {
             --color-rosa: #B83F69;
             --color-negro: #282828;
+            --color-papel: #f5f5dc;
         }
 
         body {
             font-family: "Instrument Serif", serif;
-            font-weight: bold; /*esto es un poco mala praxis*/
+            font-weight: bold;
+            /*esto es un poco mala praxis*/
 
             background-color: var(--color-negro);
             color: var(--color-rosa);
@@ -29,6 +31,24 @@
             align-items: flex-end;
             justify-content: flex-end;
             box-sizing: border-box;
+
+            background-image:
+                radial-gradient(circle, rgba(255, 255, 255, 0.2) 1%, transparent 1%),
+                radial-gradient(circle, rgba(255, 255, 255, 0.2) 1%, transparent 1%),
+                linear-gradient(0deg, rgba(0, 0, 0, 0.05) 1%, transparent 1%);
+            background-size: 5px 5px;
+            background-blend-mode: multiply;
+        }
+
+        .invertido {
+            background-color: var(--color-rosa);
+            color: var(--color-negro);
+            background-image:
+                radial-gradient(circle, rgba(0, 0, 0, 0.2) 1%, transparent 1%),
+                radial-gradient(circle, rgba(0, 0, 0, 0.2) 1%, transparent 1%),
+                linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, transparent 1%);
+            background-size: 5px 5px;
+            background-blend-mode: multiply;
         }
 
         .container {
@@ -42,14 +62,9 @@
         .section {
             background-color: var(--color-rosa);
             color: var(--color-negro);
-            
+
             box-sizing: border-box;
             transition: background-color 1s ease, color 1s ease;
-        }
-
-        .invertido {
-            background-color: var(--color-rosa);
-            color: var(--color-negro);
         }
 
         .invertido .section {
@@ -65,12 +80,17 @@
         }
 
         h2 {
-            font-size: 6vw; /* Cambia el tamaño del texto para que sea proporcional a la pantalla */
+            font-size: 6vw;
+            /* Cambia el tamaño del texto para que sea proporcional a la pantalla */
             margin: 0;
         }
 
         p {
             margin: 0;
+        }
+        
+        span, p {
+            font-size: 2vw;
         }
 
         .tarifas {
@@ -96,11 +116,13 @@
             top: -60px;
             left: 0;
             width: 200px;
-            max-width: 90vw; /* Limita el ancho del pop-up para pantallas pequeñas */
+            max-width: 90vw;
+            /* Limita el ancho del pop-up para pantallas pequeñas */
             padding: 10px;
             background: var(--color-negro);
             color: var(--color-rosa);
-            font-size: 12px; /* Reduce el tamaño de fuente para que no ocupe mucho espacio */
+            font-size: 12px;
+            /* Reduce el tamaño de fuente para que no ocupe mucho espacio */
             border-radius: 5px;
         }
 
