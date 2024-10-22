@@ -10,22 +10,148 @@
     <title>masajes de rika</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+        :root {
+            --color-rosa: #B83F69;
+            --color-negro: #282828;
+        }
+
         body {
             font-family: "Instrument Serif", serif;
+            background-color: var(--color-negro);
+            transition: background-color 1s ease, color 1s ease;
+            height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section {
+            text-align: left;
         }
 
         h2 {
             font-size: 40px;
+            margin: 0;
         }
-    
+        
         p {
             font-size: 16px;
+            margin: 0;
         }
+        
+
+        .tarifa {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .popup {
+            display: none;
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 200px;
+            padding: 10px;
+            background: var(--color-rosa);
+            color: var(--color-negro);
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        .hoverable:hover .popup {
+            display: block;
+        }
+
+        .hoverable {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .precio-normal:hover,
+        .precio-reducido:hover {
+            text-decoration: underline;
+        }
+
+        .toggle-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--color-rosa);
+            border: none;
+            cursor: pointer;
+            transition: background-color 1s ease, transform 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            transform: scale(1.1);
+        }
+
+        .invertido {
+            background-color: var(--color-rosa);
+            color: var(--color-negro);
+        }
+
+        section {
+            background-color: var(--color-rosa);
+            color: var(--color-negro);
+        }
+
+
     </style>
 </head>
 
 <body>
+    <button class="toggle-button" onclick="toggleColors()"></button>
 
+    <div class="container">
+        <section>
+            <h2>MASAJES:</h2>
+            <p>
+                <span class="hoverable">relajante<span class="popup">Ayuda a reducir el estrés y mejorar el bienestar
+                        general.</span></span> /
+                <span class="hoverable">descontracturante<span class="popup">Ideal para aliviar contracturas y tensiones
+                        musculares.</span></span> /
+                <span class="hoverable">deportivo<span class="popup">Perfecto para antes o después de la actividad
+                        física intensa.</span></span>
+            </p>
+        </section>
+
+        <section>
+            <h2>tarifas:</h2>
+            <div class="tarifa">
+                <span>una hora</span> <span>44/33</span>
+            </div>
+            <div class="tarifa">
+                <span>una hora y media</span> <span>55/44</span>
+            </div>
+            <div class="tarifa">
+                <span></span> <span>normal/reducido</span>
+            </div>
+        </section>
+
+        <section>
+            <div class="tarifa"><h2>erika michi</h2><span>DM/673 928 826</span></div>
+        </section>
+
+    <script>
+        function toggleColors() {
+            document.body.classList.toggle('invertido');
+        }
+    </script>
 </body>
 
 </html>
