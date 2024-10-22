@@ -18,13 +18,14 @@
 
         body {
             font-family: "Instrument Serif", serif;
+            font-weight: bold;
             background-color: var(--color-negro);
+            color: var(--color-rosa);
             transition: background-color 1s ease, color 1s ease;
             height: 100vh;
             display: flex;
             align-items: flex-end;
             justify-content: flex-end;
-            padding: 20px;
             box-sizing: border-box;
         }
 
@@ -33,27 +34,48 @@
             max-width: 400px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 5px;
         }
 
         .section {
-            text-align: left;
+            background-color: var(--color-rosa);
+            color: var(--color-negro);
+            box-sizing: border-box;
+            transition: background-color 1s ease, color 1s ease;
+        }
+
+        .invertido {
+            background-color: var(--color-rosa);
+            color: var(--color-negro);
+        }
+
+        .invertido .section {
+            background-color: var(--color-negro);
+            color: var(--color-rosa);
         }
 
         h2 {
             font-size: 40px;
             margin: 0;
         }
-        
+
         p {
-            font-size: 16px;
             margin: 0;
         }
-        
+
+        .tarifas {
+            display: flex;
+            flex-direction: column;
+        }
 
         .tarifa {
             display: flex;
             justify-content: space-between;
+        }
+
+        .hoverable {
+            position: relative;
+            cursor: pointer;
         }
 
         .popup {
@@ -63,24 +85,19 @@
             left: 0;
             width: 200px;
             padding: 10px;
-            background: var(--color-rosa);
-            color: var(--color-negro);
+            background: var(--color-negro);
+            color: var(--color-rosa);
             font-size: 14px;
             border-radius: 5px;
         }
 
+        .invertido .popup {
+            background: var(--color-rosa);
+            color: var(--color-negro);
+        }
+
         .hoverable:hover .popup {
             display: block;
-        }
-
-        .hoverable {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .precio-normal:hover,
-        .precio-reducido:hover {
-            text-decoration: underline;
         }
 
         .toggle-button {
@@ -100,17 +117,15 @@
             transform: scale(1.1);
         }
 
-        .invertido {
-            background-color: var(--color-rosa);
-            color: var(--color-negro);
+        .invertido .toggle-button {
+            background: var(--color-negro);
         }
 
-        section {
-            background-color: var(--color-rosa);
-            color: var(--color-negro);
+        .erika {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
         }
-
-
     </style>
 </head>
 
@@ -118,39 +133,72 @@
     <button class="toggle-button" onclick="toggleColors()"></button>
 
     <div class="container">
-        <section>
+        <div class="section">
             <h2>MASAJES:</h2>
             <p>
-                <span class="hoverable">relajante<span class="popup">Ayuda a reducir el estrés y mejorar el bienestar
-                        general.</span></span> /
-                <span class="hoverable">descontracturante<span class="popup">Ideal para aliviar contracturas y tensiones
-                        musculares.</span></span> /
-                <span class="hoverable">deportivo<span class="popup">Perfecto para antes o después de la actividad
-                        física intensa.</span></span>
+                <span class="hoverable">relajante<span class="popup">Ayuda a reducir el estrés y mejorar el bienestar general.</span></span> /
+                <span class="hoverable">descontracturante<span class="popup">Ideal para aliviar contracturas y tensiones musculares.</span></span> /
+                <span class="hoverable">deportivo<span class="popup">Perfecto para antes o después de la actividad física intensa.</span></span>
             </p>
-        </section>
-
-        <section>
+        </div>
+        <div class="section tarifas">
             <h2>tarifas:</h2>
             <div class="tarifa">
-                <span>una hora</span> <span>44/33</span>
+                <span>una hora</span>
+                <span>
+                    <span class="precio-normal">44</span> /
+                    <span class="precio-reducido">33</span>
+                </span>
             </div>
             <div class="tarifa">
-                <span>una hora y media</span> <span>55/44</span>
+                <span>una hora y media</span>
+                <span>
+                    <span class="precio-normal">55</span> /
+                    <span class="precio-reducido">44</span>
+                </span>
             </div>
             <div class="tarifa">
-                <span></span> <span>normal/reducido</span>
+                <span></span>
+                <span><span class="precio-normal">normal</span>/<span class="precio-reducido">reducido</span></span>
             </div>
-        </section>
-
-        <section>
-            <div class="tarifa"><h2>erika michi</h2><span>DM/673 928 826</span></div>
-        </section>
+        </div>
+        <div class="section erika">
+            <h2>erika michi</h2>
+            <span>673 928 826</span>
+        </div>
+    </div>
 
     <script>
         function toggleColors() {
             document.body.classList.toggle('invertido');
         }
+
+        // Añadir eventos para subrayar todas las instancias
+        document.querySelectorAll('.precio-normal').forEach(function (element) {
+            element.addEventListener('mouseenter', function () {
+                document.querySelectorAll('.precio-normal').forEach(function (el) {
+                    el.style.textDecoration = 'underline';
+                });
+            });
+            element.addEventListener('mouseleave', function () {
+                document.querySelectorAll('.precio-normal').forEach(function (el) {
+                    el.style.textDecoration = 'none';
+                });
+            });
+        });
+
+        document.querySelectorAll('.precio-reducido').forEach(function (element) {
+            element.addEventListener('mouseenter', function () {
+                document.querySelectorAll('.precio-reducido').forEach(function (el) {
+                    el.style.textDecoration = 'underline';
+                });
+            });
+            element.addEventListener('mouseleave', function () {
+                document.querySelectorAll('.precio-reducido').forEach(function (el) {
+                    el.style.textDecoration = 'none';
+                });
+            });
+        });
     </script>
 </body>
 
