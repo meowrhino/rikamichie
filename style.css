@@ -14,7 +14,9 @@ a {
   text-decoration: none;
 }
 
-p {
+p,
+h1,
+h2 {
   margin: 0;
   padding: 0;
 }
@@ -86,6 +88,12 @@ p {
   left: 50%;
   transform: translateX(-50%) rotate(180deg);
   transform-origin: center;
+}
+
+@media (max-width: 768px) {
+  .btn_abajo {
+    bottom: 3rem !important; /* en lugar de 1rem */
+  }
 }
 
 .btn_derecha {
@@ -218,6 +226,39 @@ p {
 /*DERECHA*/
 .celda.derecha {
   --bg-color: #333;
-  --text-color: #b83f69;
+  --text-color: #333;
   --btn-color: #b83f69;
+}
+
+.der_1 {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  bottom: 0%;
+  right: 0%;
+  gap: 1vw;
+}
+
+.der_1 > * {
+  background: linear-gradient(
+    to right,
+    var(--btn-color) 0%,
+    var(--btn-color) 30%,
+    var(--bg-color) 100%
+  );
+  background-color: var(--btn-color);
+  padding: 1vw 2vw;
+  position: relative;
+  padding-right: 2rem;
+  padding-bottom: 1rem;
+  border-radius: 1rem 0.1rem 0.1rem 0.1rem;
+}
+
+.der_1 > *:hover {
+  background: var(--btn-color);
+  color: var(--bg-color);
+
+  transform: scaleX(1.2);
+  transform-origin: right;
+  transition: all 1s ease;
 }

@@ -1,26 +1,30 @@
-export function initCarousel() {
-  const discs = [
-    {
-      image: "./img/disco1.jpg",
-      caption: "árabe",
-      bgColor: "#000",
-      btnColor: "#f00",
-    },
-    {
-      image: "./img/disco2.jpg",
-      caption: "cat pop",
-      bgColor: "#00f",
-      btnColor: "#fff",
-    },
-    {
-      image: "./img/disco3.jpg",
-      caption: "sanson i dalila",
-      bgColor: "#f0f",
-      btnColor: "#fff",
-    },
-  ];
+export const discs = [
+  {
+    image: "./img/disco1.jpg",
+    caption: "árabe",
+    bgColor: "#000",
+    btnColor: "#f00",
+  },
+  {
+    image: "./img/disco2.jpg",
+    caption: "cat pop",
+    bgColor: "#00f",
+    btnColor: "#fff",
+  },
+  {
+    image: "./img/disco3.jpg",
+    caption: "sanson i dalila",
+    bgColor: "#f0f",
+    btnColor: "#fff",
+  },
+];
 
-  let currentIndex = 0;
+
+
+let currentIndex = 0;
+let prevBtn, nextBtn, captionEl; // 👈 MOVER AQUÍ
+
+export function initCarousel() {
   const imgEl = document.getElementById("carousel-image");
   const captionEl = document.getElementById("carousel-caption");
   const prevBtn = document.getElementById("prev-btn");
@@ -69,4 +73,22 @@ export function initCarousel() {
 
   // Inicialización
   updateCarousel();
+}
+
+
+
+export function aplicarColores(disc) {
+  if (!prevBtn || !nextBtn || !captionEl) return;
+
+  prevBtn.style.color = disc.btnColor;
+  nextBtn.style.color = disc.btnColor;
+  captionEl.style.color = disc.btnColor;
+
+  const celda = document.querySelector(".celda.abajo");
+  if (celda) {
+    const navButtons = celda.querySelectorAll(".boton-nav");
+    navButtons.forEach((btn) => {
+      btn.style.color = disc.btnColor;
+    });
+  }
 }
