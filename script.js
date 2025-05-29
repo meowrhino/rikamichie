@@ -28,19 +28,18 @@ function crearPantallas() {
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
       if (grid[y][x] === 1) {
-        // 1.1 Creamos la <div> de la celda
-        let celda = document.createElement("div");
-        celda.classList.add("celda");
-        celda.classList.add("pos_" + y + "_" + x);
+        const celda = document.createElement("div");
+        celda.classList.add("celda", `pos_${y}_${x}`);
         celda.dataset.y = y;
         celda.dataset.x = x;
         app.appendChild(celda);
 
-        // 1.2 Cargamos su contenido desde el archivo <nombre>.html
-        let clave = y + "_" + x;
-        let nombre = nombresEspeciales[clave];
+        const clave = `${y}_${x}`;
+        const nombre = nombresEspeciales[clave];
         if (nombre) {
-          cargarContenido(celda, nombre + ".html");
+          // ** Aquí volvemos a añadir la clase especial: **
+          celda.classList.add(nombre);
+          cargarContenido(celda, `${nombre}.html`);
         }
       }
     }
