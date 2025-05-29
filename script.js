@@ -32,13 +32,22 @@ function crearPantallas() {
         celda.classList.add("celda", `pos_${y}_${x}`);
         celda.dataset.y = y;
         celda.dataset.x = x;
+
+        // --- nuevo: contenedor interno para el HTML remoto ---
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("contenido");
+        celda.appendChild(wrapper);
+
         app.appendChild(celda);
 
         const clave = `${y}_${x}`;
         const nombre = nombresEspeciales[clave];
+        const enlace = `paginas/${nombre}.html`
         if (nombre) {
           // ** Aquí volvemos a añadir la clase especial: **
           celda.classList.add(nombre);
+          // ahora le pasamos el contenedor en lugar de la celda entera
+          cargarContenido(wrapper, enlace);
           //cargarContenido(celda, `${nombre}.html`);
         }
       }
@@ -46,21 +55,18 @@ function crearPantallas() {
   }
 }
 
-// Función auxiliar para hacer fetch y meter el HTML en la celda
-function cargarContenido(celda, archivo) {
+// 2) Carga sólo dentro del wrapper, sin tocar la celda ni sus botones
+function cargarContenido(wrapper, archivo) {
   fetch(archivo)
-    .then(function (response) {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw new Error("Error HTTP: " + response.status);
-      }
+    .then(response => {
+      if (!response.ok) throw new Error("Error HTTP: " + response.status);
+      return response.text();
     })
-    .then(function (html) {
-      celda.innerHTML = html;
+    .then(html => {
+      wrapper.innerHTML = html;
     })
-    .catch(function (err) {
-      celda.innerHTML = "<p>No pude cargar " + archivo + "</p>";
+    .catch(err => {
+      wrapper.innerHTML = `<p>No pude cargar ${archivo}</p>`;
       console.error(err);
     });
 }

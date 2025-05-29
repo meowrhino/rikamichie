@@ -31,7 +31,7 @@ body {
 }
 
 .celda.activa {
-  display: block;
+  display: flex;
   opacity: 1;
 }
 
@@ -88,7 +88,51 @@ body {
   transform-origin: center;
 }
 
+/*cada una de las secciones*/
 
+.centro {
+  background-color: white;
+}
+
+h1 {
+  position: absolute;
+  top: 15%;
+  left: 18%;
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* 1) Asegúrate de que el wrapper no le ponga ancho fijo */
+.inguma {
+  max-width: 100%;  /* para que no sobrepase el ancho de su padre */
+}
+
+/* 2) A la imagen: ocupa todo el ancho del wrapper, 
+      pero siempre entre 50px y 400px, ideal 30vw */
+.inguma img {
+  display: block;
+  width: 100%;
+  max-width: clamp(50px, 30vw, 400px);
+  height: auto;   /* conserva proporción */
+
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+}
+
+.animate-e {
+  /* Duración 5s, va y vuelve (alternate), y se repite infinitamente */
+  animation: colorFade 5s infinite alternate ease-in-out;
+}
+
+@keyframes colorFade {
+  from {
+    color: white;
+  } /* inicio en blanco */
+  to {
+    color: red;
+  } /* acaba en rojo */
+}
 
 /* Ejemplos personalizados por posición 
 .celda.pos_0_1 {
