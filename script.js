@@ -60,13 +60,14 @@ function cargarContenido(wrapper, archivo) {
     .then((html) => {
       wrapper.innerHTML = html;
 
-      if (archivo.includes("abajo.html")) {
+      if (archivo.endsWith("abajo.html")) {
         setTimeout(() => {
           initCarousel();
-          aplicarColores(discs[0]);
+          console.log("initCarousel lanzado desde abajo.html");
+          actualizarVista(); // 🔥 fuerza a generar botones otra vez
         }, 50); // con un poco de delay para asegurarse
+        
       }
-      
     })
     .catch((err) => {
       wrapper.innerHTML = `<p>No pude cargar ${archivo}</p>`;
@@ -124,7 +125,7 @@ function crearBotonesNavegacion(celda) {
 }
 
 // === IMPORTS Y EJECUCIÓN FINAL ===
-import { initCarousel, aplicarColores, discs } from "./script/carrusel.js";
+import { initCarousel, discs } from "./script/carrusel.js";
 
 crearPantallas();
 actualizarVista();

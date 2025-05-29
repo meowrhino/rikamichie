@@ -1,94 +1,108 @@
 export const discs = [
   {
-    image: "./img/disco1.jpg",
+    image: "../img/disco1.jpg",
     caption: "árabe",
     bgColor: "#000",
     btnColor: "#f00",
   },
   {
-    image: "./img/disco2.jpg",
+    image: "../img/disco2.jpg",
     caption: "cat pop",
     bgColor: "#00f",
     btnColor: "#fff",
   },
   {
-    image: "./img/disco3.jpg",
+    image: "../img/disco3.jpg",
     caption: "sanson i dalila",
     bgColor: "#f0f",
     btnColor: "#fff",
   },
 ];
 
-
-
 let currentIndex = 0;
-let prevBtn, nextBtn, captionEl; // 👈 MOVER AQUÍ
+let imgEl;
+let captionEl;
+let prevBtn;
+let nextBtn;
+
+// Controles para inicializaciones únicas
+let listenersInitialized = false;
+let observerInitialized = false;
 
 export function initCarousel() {
-  const imgEl = document.getElementById("carousel-image");
-  const captionEl = document.getElementById("carousel-caption");
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
+  // Referencias al DOM
+  imgEl     = document.getElementById("carousel-image");
+  captionEl = document.getElementById("carousel-caption");
+  prevBtn   = document.getElementById("prev-btn");
+  nextBtn   = document.getElementById("next-btn");
 
-  function updateCarousel() {
-    const disc = discs[currentIndex];
-    imgEl.src = disc.image;
-    captionEl.textContent = disc.caption;
-    document.body.style.backgroundColor = disc.bgColor;
-
-    // 👇 Cambiar color de los botones
-    prevBtn.style.color = disc.btnColor;
-    nextBtn.style.color = disc.btnColor;
-
-    // 👇 Si quieres que cambien también el color del texto/caption
-    captionEl.style.color = disc.btnColor;
-
-    // 🔥 Cambiar color de los botones de navegación (arriba, abajo, etc.)
-    const celda = document.querySelector(".celda.abajo");
-    if (celda) {
-      const navButtons = celda.querySelectorAll(".boton-nav");
-      navButtons.forEach((btn) => {
-        btn.style.color = disc.btnColor;
-      });
-    }
-
-    // Desactivar botones en extremos
-    prevBtn.disabled = currentIndex === 0;
-    nextBtn.disabled = currentIndex === discs.length - 1;
+  // 1) Enlazar listeners (solo una vez)
+  if (!listenersInitialized) {
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        console.log("◀️ PREV CLICKED - new index:", currentIndex);
+        updateCarousel();
+      }
+    });
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < discs.length - 1) {
+        currentIndex++;
+        console.log("▶️ NEXT CLICKED - new index:", currentIndex);
+        updateCarousel();
+      }
+    });
+    listenersInitialized = true;
   }
 
-  prevBtn.addEventListener("click", () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateCarousel();
+  // 2) Observer para estilizar grid-nav (.boton-nav) al crearse dinámicamente
+  if (!observerInitialized) {
+    const celdaAbajo = document.querySelector(".celda.abajo");
+    if (celdaAbajo) {
+      const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+          for (const node of mutation.addedNodes) {
+            if (
+              node.nodeType === Node.ELEMENT_NODE &&
+              node.classList.contains("boton-nav")
+            ) {
+              node.style.color = discs[currentIndex].btnColor;
+            }
+          }
+        }
+      });
+      observer.observe(celdaAbajo, { childList: true });
     }
-  });
+    observerInitialized = true;
+  }
 
-  nextBtn.addEventListener("click", () => {
-    if (currentIndex < discs.length - 1) {
-      currentIndex++;
-      updateCarousel();
-    }
-  });
-
-  // Inicialización
+  // 3) Siempre repintar vista al (re)iniciar
   updateCarousel();
 }
 
+function updateCarousel() {
+  const disc = discs[currentIndex];
 
-
-export function aplicarColores(disc) {
-  if (!prevBtn || !nextBtn || !captionEl) return;
-
-  prevBtn.style.color = disc.btnColor;
-  nextBtn.style.color = disc.btnColor;
+  // Imagen y texto
+  imgEl.src = disc.image;
+  captionEl.textContent = disc.caption;
   captionEl.style.color = disc.btnColor;
 
-  const celda = document.querySelector(".celda.abajo");
-  if (celda) {
-    const navButtons = celda.querySelectorAll(".boton-nav");
-    navButtons.forEach((btn) => {
+  // Fondo de la celda "abajo"
+  const celdaAbajo = document.querySelector(".celda.abajo");
+  if (celdaAbajo) {
+    celdaAbajo.style.backgroundColor = disc.bgColor;
+    // Estilizar botonos grid-nav existentes
+    celdaAbajo.querySelectorAll(".boton-nav").forEach((btn) => {
       btn.style.color = disc.btnColor;
     });
   }
+
+  // Colores de los botones del carrusel
+  prevBtn.style.color = disc.btnColor;
+  nextBtn.style.color = disc.btnColor;
+
+  // Desactivar extremos
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === discs.length - 1;
 }

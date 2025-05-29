@@ -206,6 +206,10 @@ h2 {
 }
 
 /*ABAJO*/
+.celda.abajo {
+  --text-color: #333;
+  --btn-color: #f00;
+}
 .carousel {
   position: absolute;
   top: 50%;
