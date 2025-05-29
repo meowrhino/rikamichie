@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 #content {
@@ -16,6 +17,10 @@ body {
   width: 100vw;
   height: 100vh;
   display: none;
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .celda.activa {
@@ -33,22 +38,25 @@ body {
   z-index: 10;
 }
 
-.arriba {
+.btn_arriba {
   top: 1rem;
   left: 50%;
   transform: translateX(-50%);
 }
-.abajo {
+
+.btn_abajo {
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
 }
-.izquierda {
+
+.btn_izquierda {
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
 }
-.derecha {
+
+.btn_derecha {
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);

@@ -30,13 +30,13 @@ function crearPantallas(grid) {
       if (grid[y][x]) {
         // Solo si la celda está activa (valor 1)
         const celda = document.createElement("div");
-        
+
         // Añadir clase especial según coordenadas (si existe)
         const clave = `${y}_${x}`;
         if (nombresEspeciales[clave]) {
-            celda.classList.add(nombresEspeciales[clave]);
+          celda.classList.add(nombresEspeciales[clave]);
         }
-        
+
         celda.classList.add("celda", `pos_${y}_${x}`); // Asigna clases para identificar celda
         celda.dataset.y = y; // Guarda coordenadas como atributos dataset
         celda.dataset.x = x;
@@ -55,29 +55,55 @@ function actualizarVista() {
   crearBotonesNavegacion(activa);
 }
 
+/**
+ * Genera y coloca los botones de navegación dentro de la celda activa.
+ * Cada botón recibe:
+ *   - Una clase CSS distinta (.btn_arriba, .btn_abajo, …) para posicionarlo.
+ *   - Un label amigable (“arriba”, “abajo”, …) como texto visible.
+ */
 function crearBotonesNavegacion(celda) {
+  // 1) Eliminamos cualquier botón anterior antes de crear los nuevos
   document.querySelectorAll(".boton-nav").forEach((b) => b.remove());
 
+  // 2) Definimos las direcciones posibles:
+  //    dy/dx: desplazamiento en la cuadrícula
+  //    clase: nombre de la clase CSS que aplica posición
+  //    label: texto que verá el usuario
   const dirs = [
-    { dy: -1, dx: 0, clase: "arriba" },
-    { dy: 1, dx: 0, clase: "abajo" },
-    { dy: 0, dx: -1, clase: "izquierda" },
-    { dy: 0, dx: 1, clase: "derecha" },
+    { dy: -1, dx: 0, clase: "btn_arriba", label: "arriba" },
+    { dy: 1, dx: 0, clase: "btn_abajo", label: "abajo" },
+    { dy: 0, dx: -1, clase: "btn_izquierda", label: "izquierda" },
+    { dy: 0, dx: 1, clase: "btn_derecha", label: "derecha" },
   ];
 
+  // 3) Recorremos cada dirección para ver si hay celda activa en esa posición
   dirs.forEach((d) => {
-    const newY = posY + d.dy;
-    const newX = posX + d.dx;
+    const newY = posY + d.dy; // fila destino
+    const newX = posX + d.dx; // columna destino
 
+    // 4) Solo creamos botón si esa posición existe en el grid y está activa (valor 1)
     if (grid[newY] && grid[newY][newX]) {
+      // 5) Creamos el elemento <button>
       const boton = document.createElement("button");
+
+      // 6) Le añadimos:
+      //    - la clase genérica 'boton-nav'
+      //    - la clase específica de posición (ej. 'btn_arriba')
       boton.classList.add("boton-nav", d.clase);
-      boton.textContent = d.clase;
+
+      // 7) Ponemos el texto que verá el usuario (ej. 'arriba')
+      boton.textContent = d.label;
+
+      // 8) Al hacer clic:
+      //    a) Actualizamos posY/posX a la nueva posición
+      //    b) Llamamos a actualizarVista() para cambiar de celda
       boton.onclick = () => {
         posY = newY;
         posX = newX;
         actualizarVista();
       };
+
+      // 9) Insertamos el botón dentro de la celda activa
       celda.appendChild(boton);
     }
   });
