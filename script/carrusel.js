@@ -1,19 +1,19 @@
 export function initCarousel() {
   const discs = [
     {
-      image: "../img/disco1.jpg",
+      image: "./img/disco1.jpg",
       caption: "árabe",
       bgColor: "#000",
       btnColor: "#f00",
     },
     {
-      image: "../img/disco2.jpg",
+      image: "./img/disco2.jpg",
       caption: "cat pop",
       bgColor: "#00f",
       btnColor: "#fff",
     },
     {
-      image: "../img/disco3.jpg",
+      image: "./img/disco3.jpg",
       caption: "sanson i dalila",
       bgColor: "#f0f",
       btnColor: "#fff",
