@@ -84,7 +84,7 @@ function actualizarVista() {
 // 3) Crea los botones dentro de la celda activa
 function crearBotonesNavegacion(celda) {
   // 3.1 Limpia botones previos
-  let viejos = document.querySelectorAll(".boton-nav");
+  let viejos = celda.querySelectorAll(".boton-nav");
   for (let i = 0; i < viejos.length; i++) {
     viejos[i].remove();
   }
