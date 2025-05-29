@@ -39,7 +39,7 @@ function crearPantallas() {
         if (nombre) {
           // ** Aquí volvemos a añadir la clase especial: **
           celda.classList.add(nombre);
-          cargarContenido(celda, `${nombre}.html`);
+          //cargarContenido(celda, `${nombre}.html`);
         }
       }
     }
