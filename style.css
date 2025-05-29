@@ -82,6 +82,11 @@ h2 {
   transform: translateX(-50%) rotate(0deg);
   transform-origin: center;
 }
+@media (max-width: 768px) {
+  .btn_arriba {
+    top: 4rem !important; /* en lugar de 1rem */
+  }
+}
 
 .btn_abajo {
   bottom: 1rem;
@@ -92,7 +97,7 @@ h2 {
 
 @media (max-width: 768px) {
   .btn_abajo {
-    bottom: 3rem !important; /* en lugar de 1rem */
+    bottom: 4rem !important; /* en lugar de 1rem */
   }
 }
 
