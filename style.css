@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+JP:wght@900&display=swap");
+
 html,
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 #content {
@@ -21,48 +24,73 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: none;
+
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 
 .celda.activa {
   display: block;
+  opacity: 1;
 }
 
 .boton-nav {
   position: absolute;
-  padding: 0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
+  font-family: "Instrument Serif", serif;
+  font-size: 1rem;
+
+  padding: 0;
   border: none;
+  background: none;
+
   cursor: pointer;
-  border-radius: 0.5rem;
-  z-index: 10;
+  z-index: 1;
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .boton-nav {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .boton-nav {
+    font-size: 2rem;
+  }
 }
 
 .btn_arriba {
   top: 1rem;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotate(0deg);
+  transform-origin: center;
 }
 
 .btn_abajo {
   bottom: 1rem;
   left: 50%;
-  transform: translateX(-50%);
-}
-
-.btn_izquierda {
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
+  transform: translateX(-50%) rotate(180deg);
+  transform-origin: center;
 }
 
 .btn_derecha {
-  right: 1rem;
+  right: 0rem;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
 }
 
-/* Ejemplos personalizados por posición */
+.btn_izquierda {
+  left: 0rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(270deg);
+  transform-origin: center;
+}
+
+
+
+/* Ejemplos personalizados por posición 
 .celda.pos_0_1 {
   background-color: #ffebcd;
 }
@@ -78,3 +106,4 @@ body {
 .celda.pos_2_1 {
   background-color: #d8bfd8;
 }
+*/
