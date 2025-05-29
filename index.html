@@ -2,195 +2,198 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Demo 3×4 Navegación</title>
-    <style>
-        :root {
-            /* — Paleta de colores — */
-            --gris-fondo: #2b2b2b;
-            --cruz-cabeza: #f4f4ff;
-            /* violeta muy claro */
-            --cruz-izq: #19742e;
-            /* verde oscuro */
-            --cruz-centro: #fafafa;
-            /* casi blanco */
-            --cruz-der: #dc346f;
-            /* rosa fuerte */
-            --cruz-abajo: #2e2ef1;
-            /* azul vivo */
-            --cruz-abajo-abajo: #4447f5;
-            /* azul oscuro */
-            /* — Tipografías — */
-            --font-sans: 'Inter', sans-serif;
-            --font-serif: 'Playfair Display', serif;
-            --font-mono: 'Fira Code', monospace;
-            /* — Espaciados globales — */
-            --gap: 16px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>rikamichie v3</title>
+  <style>
+    :root {
+      --gris-fondo: #2b2b2b;
+      --cruz-cabeza: #f4f4ff;
+      --cruz-izq: #19742e;
+      --cruz-centro: #fafafa;
+      --cruz-der: #dc346f;
+      --cruz-abajo: #2e2ef1;
+      --cruz-abajo-abajo: #4447f5;
+      --font-sans: 'Inter', Arial, sans-serif;
+      --font-serif: 'Playfair Display', serif;
+      --gap: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: var(--font-sans);
+      background: var(--gris-fondo);
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 100vw);
+      grid-template-rows: repeat(4, 100vh);
+      scroll-behavior: smooth;
+      width: 100vw;
+      height: 100vh;
+      /* no overflow here, grid se mueve con JS */
+    }
+    .celda { position: relative; min-width: 100vw; min-height: 100vh; }
+    #cruz_cabeza { background: var(--cruz-cabeza);}
+    #cruz_izq { background: var(--cruz-izq); color: #fff;}
+    #cruz_centro { background: var(--cruz-centro);}
+    #cruz_der { background: var(--cruz-der); color: #fff;}
+    #cruz_abajo { background: var(--cruz-abajo); color: #fff;}
+    #cruz_abajo_abajo { background: var(--cruz-abajo-abajo); color: #fff;}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    /* Botones de navegación grandes y táctiles, centrados en el borde correspondiente */
+    .nav-btn {
+      position: absolute;
+      background: rgba(20,20,20,0.11);
+      border: none;
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      font-weight: 600;
+      padding: 18px 36px;
+      border-radius: 2em;
+      cursor: pointer;
+      user-select: none;
+      z-index: 2;
+      min-width: 120px;
+      box-shadow: 0 1px 9px 0 rgba(0,0,0,0.14);
+      transition: background .15s, transform .13s;
+      opacity: .98;
+    }
+    .nav-btn.arriba    { top: 12px; left: 50%; transform: translateX(-50%);}
+    .nav-btn.abajo     { bottom: 12px; left: 50%; transform: translateX(-50%);}
+    .nav-btn.izquierda { left: 12px; top: 50%; transform: translateY(-50%);}
+    .nav-btn.derecha   { right: 12px; top: 50%; transform: translateY(-50%);}
+    .nav-btn:active { background: #fff2; transform: scale(.97);}
+    .nav-btn:focus-visible { outline: 3px solid #dc346f; }
 
-        html,
-        body {
-            height: 100%;
-            overflow: hidden;
-            /* bloquea scroll manual */
-            font-family: var(--font-sans);
-        }
+    /* Títulos centrados */
+    #cruz_centro h1 {
+      font-family: var(--font-serif);
+      font-size: 2.1rem;
+      margin: 0 auto;
+      color: #222;
+      text-align: center;
+      letter-spacing: .04em;
+    }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 100vw);
-            grid-template-rows: repeat(4, 100vh);
-            scroll-behavior: smooth;
-            /* para scrollTo en JS */
-        }
+    /* Botón Volver: móvil abajo, desktop esquina */
+    #btnVolver {
+      position: fixed;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+      z-index: 10;
+      font-size: 1.1rem;
+      font-family: var(--font-serif);
+      padding: 14px 36px;
+      border-radius: 24px;
+      border: none;
+      background: #4447f5;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 2px 12px #0003;
+      opacity: .96;
+      transition: background .18s;
+    }
+    #btnVolver:active { background: #2e2ef1; }
 
-        .celda {
-            position: relative;
-            background: var(--gris-fondo);
-        }
-
-        /* — Estilos de la cruz central — */
-        #cruz_cabeza {
-            background: var(--cruz-cabeza);
-            color: #333;
-        }
-
-        #cruz_izq {
-            background: var(--cruz-izq);
-            color: #fff;
-            padding: var(--gap);
-        }
-
-        #cruz_centro {
-            background: var(--cruz-centro);
-            color: #000;
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #cruz_der {
-            background: var(--cruz-der);
-            color: #fff;
-            padding: var(--gap);
-        }
-
-        #cruz_abajo {
-            background: var(--cruz-abajo);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #cruz_abajo_abajo {
-            background: var(--cruz-abajo-abajo);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* — Botones de navegación (puedes ubicarlos con absolute dentro de cada celda) — */
-        .nav-btn {
-            position: absolute;
-            background: none;
-            border: none;
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            cursor: pointer;
-            user-select: none;
-        }
-    </style>
+    @media (min-width: 700px) {
+      /* En desktop el botón volver en la esquina */
+      #btnVolver { left: unset; right: 18px; bottom: 18px; transform: none; }
+      .nav-btn { font-size: 1.25rem; padding: 16px 38px; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="grid" id="laGrid">
+    <!-- 3×4 = 12 celdas -->
+    <section id="r1c1" class="celda"></section>
+    <section id="cruz_cabeza" class="celda"></section>
+    <section id="r1c3" class="celda"></section>
+    <section id="cruz_izq" class="celda"></section>
+    <section id="cruz_centro" class="celda">
+      <h1><span style="color:#dc346f">e</span>rikamichis demo</h1>
+    </section>
+    <section id="cruz_der" class="celda"></section>
+    <section id="r3c1" class="celda"></section>
+    <section id="cruz_abajo" class="celda"></section>
+    <section id="r3c3" class="celda"></section>
+    <section id="r4c1" class="celda"></section>
+    <section id="cruz_abajo_abajo" class="celda"></section>
+    <section id="r4c3" class="celda"></section>
+  </div>
+  <button id="btnVolver">Volver al centro</button>
 
-    <div class="grid" id="laGrid">
-        <!-- 3×4 = 12 celdas -->
-        <section id="r1c1" class="celda"></section>
-        <section id="r1c2" class="celda">
-            <!-- Aquí va tu “Arriba” -->
-            <button class="nav-btn" id="navArriba">Arriba</button>
-        </section>
-        <section id="r1c3" class="celda"></section>
+  <script>
+    // --- Mapa de la cruz y direcciones ---
+    const celdasCruz = {
+      cruz_cabeza:   { row: 1, col: 2, adyacentes: { abajo: 'cruz_centro' } },
+      cruz_izq:      { row: 2, col: 1, adyacentes: { derecha: 'cruz_centro' } },
+      cruz_centro:   { row: 2, col: 2, adyacentes: { arriba: 'cruz_cabeza', abajo: 'cruz_abajo', izquierda: 'cruz_izq', derecha: 'cruz_der' } },
+      cruz_der:      { row: 2, col: 3, adyacentes: { izquierda: 'cruz_centro' } },
+      cruz_abajo:    { row: 3, col: 2, adyacentes: { arriba: 'cruz_centro' } }
+    };
+    // Dirección: nombre visible, clase CSS, código tecla arrow
+    const direcciones = {
+      arriba:    { label: 'Arriba',    clase: 'arriba',    key: 'ArrowUp' },
+      abajo:     { label: 'Abajo',     clase: 'abajo',     key: 'ArrowDown' },
+      izquierda: { label: 'Izquierda', clase: 'izquierda', key: 'ArrowLeft' },
+      derecha:   { label: 'Derecha',   clase: 'derecha',   key: 'ArrowRight' }
+    };
 
-        <section id="r2c1" class="celda">
-            <button class="nav-btn" id="navIzquierda">Izquierda</button>
-        </section>
-        <section id="r2c2" class="celda">
-            <!-- CONTENIDO CENTRAL -->
-            <h1><span style="color:red">e</span>rikamichis demo</h1>
-        </section>
-        <section id="r2c3" class="celda">
-            <button class="nav-btn" id="navDerecha">Derecha</button>
-        </section>
+    // ScrollTo con el grid (no window)
+    const grid = document.getElementById('laGrid');
+    function scrollToCell({ row, col }, instant = false) {
+      const top = (row - 1) * window.innerHeight;
+      const left = (col - 1) * window.innerWidth;
+      grid.scrollTo({ top, left, behavior: instant ? 'auto' : 'smooth' });
+    }
+    // Centrar al cargar y al resize
+    const startCell = { row: 2, col: 2 };
+    let currentCelda = 'cruz_centro';
+    function centrarCelda(celdaKey, instant = false) {
+      const celda = celdasCruz[celdaKey];
+      if (celda) {
+        scrollToCell(celda, instant);
+        currentCelda = celdaKey;
+      }
+    }
+    window.addEventListener('load',   () => setTimeout(() => centrarCelda('cruz_centro', true), 50));
+    window.addEventListener('resize', () => centrarCelda(currentCelda, true));
 
-        <section id="r3c1" class="celda"></section>
-        <section id="r3c2" class="celda">
-            <button class="nav-btn" id="navAbajo">Abajo</button>
-        </section>
-        <section id="r3c3" class="celda"></section>
+    // Generar botones navegables en cada celda de la cruz
+    for (let id in celdasCruz) {
+      const celda = celdasCruz[id];
+      const celdaElem = document.getElementById(id);
+      for (let dir in celda.adyacentes) {
+        const btn = document.createElement('button');
+        btn.className = `nav-btn ${direcciones[dir].clase}`;
+        btn.innerText = direcciones[dir].label;
+        btn.setAttribute('aria-label', `Ir ${direcciones[dir].label}`);
+        btn.addEventListener('click', () => {
+          centrarCelda(celda.adyacentes[dir]);
+        });
+        celdaElem.appendChild(btn);
+      }
+    }
+    // Botón Volver
+    document.getElementById('btnVolver').onclick = () => centrarCelda('cruz_centro');
 
-        <section id="r4c1" class="celda"></section>
-        <section id="r4c2" class="celda"></section>
-        <section id="r4c3" class="celda"></section>
-    </div>
-
-    <button id="btnVolver">Volver</button>
-
-    <script>
-        const grid = document.getElementById('laGrid');
-        const startCell = { row: 2, col: 2 };
-        function scrollToCell({ row, col }, instant = false) {
-            const top = (row - 1) * window.innerHeight;
-            const left = (col - 1) * window.innerWidth;
-            grid.scrollTo({ top, left, behavior: instant ? 'auto' : 'smooth' });
+    // Navegación con arrow keys
+    document.addEventListener('keydown', function(e) {
+      // Si estamos en una celda de la cruz y existe adyacente para esa flecha
+      if (Object.keys(celdasCruz).includes(currentCelda)) {
+        for (let dir in direcciones) {
+          if (e.key === direcciones[dir].key && celdasCruz[currentCelda].adyacentes[dir]) {
+            e.preventDefault(); // Evita el scroll natural
+            centrarCelda(celdasCruz[currentCelda].adyacentes[dir]);
+            return;
+          }
         }
-        // centramos al cargar (esperamos un pelín por iOS)
-        window.addEventListener('load', () => setTimeout(() => scrollToCell(startCell, true), 50));
-        window.addEventListener('resize', () => scrollToCell(startCell, true));
-
-        // bindings de nav
-        document.getElementById('navArriba')
-            .addEventListener('click', () => scrollToCell({ row: 1, col: 2 }));
-        document.getElementById('navAbajo')
-            .addEventListener('click', () => scrollToCell({ row: 3, col: 2 }));
-        document.getElementById('navIzquierda')
-            .addEventListener('click', () => scrollToCell({ row: 2, col: 1 }));
-        document.getElementById('navDerecha')
-            .addEventListener('click', () => scrollToCell({ row: 2, col: 3 }));
-
-        document.getElementById('btnVolver')
-            .addEventListener('click', () => scrollToCell(startCell));
-
-
-        function irACelda(fila, col, instant = false) {
-            window.scrollTo({
-                top: (fila - 1) * window.innerHeight,
-                left: (col - 1) * window.innerWidth,
-                behavior: instant ? 'auto' : 'smooth'
-            });
-        }
-
-        function irArriba() { irACelda(1, 2); }
-        function irAbajo() { irACelda(3, 2); }
-        function irIzquierda() { irACelda(2, 1); }
-        function irDerecha() { irACelda(2, 3); }
-        function volverCentro() { irACelda(2, 2); }
-
-        window.onload = () => { volverCentro(); };
-        window.onresize = () => { volverCentro(); };
-    </script>
+      }
+    });
+  </script>
 </body>
-
 </html>
