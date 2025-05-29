@@ -158,11 +158,11 @@ p {
 .celda.izquierda {
   --bg-color: #16610e;
   --text-color: #fed16a;
-  --text2-color: #FFF4A4;
+  --text2-color: #fff4a4;
   --btn-color: #f97a00;
 }
 
-.izquierda h2{
+.izquierda h2 {
   color: var(--text2-color);
 }
 
@@ -192,19 +192,32 @@ p {
 .lista_libros {
   display: flex;
   flex-direction: column;
-  height: 20vh; 
+  height: 20vh;
   gap: 1vw;
   overflow-y: auto; /* scroll vertical */
 }
 
-
 /*ABAJO*/
-    .carousel {
-      text-align: center;
-    }
-    .carousel img {
-      width: 300px;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
+.carousel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.carousel img {
+  width: 300px;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/*DERECHA*/
+.celda.derecha {
+  --bg-color: #333;
+  --text-color: #b83f69;
+  --btn-color: #b83f69;
+}

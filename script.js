@@ -1,3 +1,6 @@
+//invocar elc arrusel de la paginad e abajo
+import { initCarousel } from "./script/carrusel.js";
+
 // Referencia al contenedor principal
 const app = document.getElementById("content");
 
@@ -42,7 +45,7 @@ function crearPantallas() {
 
         const clave = `${y}_${x}`;
         const nombre = nombresEspeciales[clave];
-        const enlace = `paginas/${nombre}.html`
+        const enlace = `paginas/${nombre}.html`;
         if (nombre) {
           // ** Aquí volvemos a añadir la clase especial: **
           celda.classList.add(nombre);
@@ -58,14 +61,19 @@ function crearPantallas() {
 // 2) Carga sólo dentro del wrapper, sin tocar la celda ni sus botones
 function cargarContenido(wrapper, archivo) {
   fetch(archivo)
-    .then(response => {
+    .then((response) => {
       if (!response.ok) throw new Error("Error HTTP: " + response.status);
       return response.text();
     })
-    .then(html => {
+    .then((html) => {
       wrapper.innerHTML = html;
+
+      // Si estamos cargando abajo.html, lanzamos el carrusel
+      if (archivo.includes("abajo.html")) {
+        initCarousel();
+      }
     })
-    .catch(err => {
+    .catch((err) => {
       wrapper.innerHTML = `<p>No pude cargar ${archivo}</p>`;
       console.error(err);
     });
@@ -129,3 +137,4 @@ function crearBotonesNavegacion(celda) {
 // 4) Inicio: creamos pantallas y marcamos la inicial
 crearPantallas();
 actualizarVista();
+
