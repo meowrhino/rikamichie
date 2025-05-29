@@ -1,0 +1,72 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#content {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.celda {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+}
+
+.celda.activa {
+  display: block;
+}
+
+.boton-nav {
+  position: absolute;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  z-index: 10;
+}
+
+.arriba {
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.abajo {
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.izquierda {
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.derecha {
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Ejemplos personalizados por posición */
+.celda.pos_0_1 {
+  background-color: #ffebcd;
+}
+.celda.pos_1_0 {
+  background-color: #add8e6;
+}
+.celda.pos_1_1 {
+  background-color: #ffe4e1;
+}
+.celda.pos_1_2 {
+  background-color: #90ee90;
+}
+.celda.pos_2_1 {
+  background-color: #d8bfd8;
+}

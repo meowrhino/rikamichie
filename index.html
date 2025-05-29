@@ -1,121 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Grid Navegable Mínima</title>
-  <style>
-    html, body {
-      width: 100vw;
-      height: 100vh;
-      margin: 0; padding: 0;
-      overflow: hidden;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 100vw);
-      grid-template-rows: repeat(4, 100vh);
-      width: 100vw;
-      height: 100vh;
-    }
-    .celda {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      /* Sin estilos, todo funcional */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      background: #eee;
-    }
-    /* Botón navegacion: sin diseño, sólo posición */
-    .nav-btn {
-      position: absolute;
-      min-width: 80px;
-      min-height: 30px;
-      background: #fff;
-      border: 1px solid #aaa;
-      cursor: pointer;
-    }
-    .nav-btn.arriba    { top: 1rem; left: 50%; transform: translateX(-50%);}
-    .nav-btn.abajo     { bottom: 1rem; left: 50%; transform: translateX(-50%);}
-    .nav-btn.izquierda { left: 1rem; top: 50%; transform: translateY(-50%);}
-    .nav-btn.derecha   { right: 1rem; top: 50%; transform: translateY(-50%);}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid dinámico</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="grid" id="laGrid">
-    <section id="r1c1" class="celda"></section>
-    <section id="cruz_cabeza" class="celda">cabeza</section>
-    <section id="r1c3" class="celda"></section>
-    <section id="cruz_izq" class="celda">izquierda</section>
-    <section id="cruz_centro" class="celda">centro</section>
-    <section id="cruz_der" class="celda">derecha</section>
-    <section id="r3c1" class="celda"></section>
-    <section id="cruz_abajo" class="celda">abajo</section>
-    <section id="r3c3" class="celda"></section>
-    <section id="r4c1" class="celda"></section>
-    <section id="cruz_abajo_abajo" class="celda"></section>
-    <section id="r4c3" class="celda"></section>
-  </div>
-  <script>
-    // Coordenadas de la grid (3x4)
-    const layout = [
-      [null,    "cruz_cabeza", null     ],
-      ["cruz_izq","cruz_centro","cruz_der"],
-      [null,    "cruz_abajo",  null     ],
-      [null,    "cruz_abajo_abajo", null]
-    ];
-    // Solo las celdas con nombre distinto de null son "activas"
-    const directions = [
-      { name: "arriba",    dx:  0, dy: -1 },
-      { name: "abajo",     dx:  0, dy:  1 },
-      { name: "izquierda", dx: -1, dy:  0 },
-      { name: "derecha",   dx:  1, dy:  0 }
-    ];
-    // Para centrar la grid en la celda central:
-    const idToCoords = {};
-    layout.forEach((row, y) => row.forEach((cell, x) => {
-      if(cell) idToCoords[cell] = { x, y };
-    }));
+    <div id="content"></div>
 
-    // Función para hacer scroll a la celda dada
-    function scrollToCelda(x, y, instant = false) {
-      const top = y * window.innerHeight;
-      const left = x * window.innerWidth;
-      document.getElementById('laGrid').scrollTo({ top, left, behavior: instant ? 'auto' : 'smooth' });
-      // Actualizamos el estado actual (para las flechas si luego lo quieres)
-      window._currentCelda = {x, y};
-    }
-
-    // Crear botones de navegación dinámicamente
-    Object.keys(idToCoords).forEach(id => {
-      const {x, y} = idToCoords[id];
-      const celda = document.getElementById(id);
-      directions.forEach(dir => {
-        const nx = x + dir.dx, ny = y + dir.dy;
-        // Si hay celda activa en esa dirección
-        if(layout[ny] && layout[ny][nx]) {
-          const btn = document.createElement('button');
-          btn.className = `nav-btn ${dir.name}`;
-          btn.textContent = dir.name;
-          btn.onclick = () => scrollToCelda(nx, ny);
-          celda.appendChild(btn);
-        }
-      });
-    });
-
-    // Centrar al cargar
-    window.addEventListener('load', () => {
-      const centro = idToCoords["cruz_centro"];
-      setTimeout(()=>scrollToCelda(centro.x, centro.y, true), 50);
-    });
-    // Centrar al resize
-    window.addEventListener('resize', () => {
-      if(window._currentCelda)
-        scrollToCelda(window._currentCelda.x, window._currentCelda.y, true);
-    });
-  </script>
+    <script src="script.js"></script>
 </body>
+
 </html>
