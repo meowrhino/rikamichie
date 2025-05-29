@@ -12,6 +12,21 @@
     <div id="content"></div>
 
     <script src="script.js"></script>
+    <script type="module">
+        import { initCarousel } from './script/carrusel.js';
+
+        function cargarContenido(wrapper, archivo) {
+            fetch(archivo)
+                .then(res => res.text())
+                .then(html => {
+                    wrapper.innerHTML = html;
+                    if (archivo.endsWith('abajo.html')) {
+                        // tras inyectar el HTML, llamas al init
+                        initCarousel();
+                    }
+                });
+        }
+    </script>
 </body>
 
 </html>

@@ -122,7 +122,6 @@ function crearBotonesNavegacion(celda) {
       };
 
       celda.appendChild(boton);
-      console.log(`Botón creado: ${d.label} (${nuevaY}, ${nuevaX})`);
     }
   }
 }
