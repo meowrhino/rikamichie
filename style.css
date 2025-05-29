@@ -6,7 +6,17 @@ body {
   padding: 0;
   overflow: hidden;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: "Instrument Serif", serif;
+}
+
+a {
+  color: var(--btn-color);
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }
 
 #content {
@@ -24,7 +34,9 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: none;
+
+  background-color: var(--bg-color, transparent);
+  color: var(--text-color, inherit);
 
   opacity: 0;
   transition: opacity 1s ease;
@@ -46,6 +58,8 @@ body {
 
   cursor: pointer;
   z-index: 1;
+
+  color: var(--btn-color, inherit);
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {
@@ -89,12 +103,16 @@ body {
 }
 
 /*cada una de las secciones*/
+/*CENTRO*/
 
-.centro {
-  background-color: white;
+/* PALETA PARA LA PANTALLA CENTRAL */
+.celda.centro {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --btn-color: #000000;
 }
 
-h1 {
+.centro h1 {
   position: absolute;
   top: 15%;
   left: 18%;
@@ -104,7 +122,7 @@ h1 {
 
 /* 1) Asegúrate de que el wrapper no le ponga ancho fijo */
 .inguma {
-  max-width: 100%;  /* para que no sobrepase el ancho de su padre */
+  max-width: 100%; /* para que no sobrepase el ancho de su padre */
 }
 
 /* 2) A la imagen: ocupa todo el ancho del wrapper, 
@@ -113,7 +131,7 @@ h1 {
   display: block;
   width: 100%;
   max-width: clamp(50px, 30vw, 400px);
-  height: auto;   /* conserva proporción */
+  height: auto; /* conserva proporción */
 
   position: absolute;
   bottom: 0%;
@@ -134,20 +152,50 @@ h1 {
   } /* acaba en rojo */
 }
 
-/* Ejemplos personalizados por posición 
-.celda.pos_0_1 {
-  background-color: #ffebcd;
+/*IZQUIERDA*/
+
+/* PALETA PARA LA PANTALLA IZQUIERDA */
+.celda.izquierda {
+  --bg-color: #16610e;
+  --text-color: #fed16a;
+  --text2-color: #FFF4A4;
+  --btn-color: #f97a00;
 }
-.celda.pos_1_0 {
-  background-color: #add8e6;
+
+.izquierda h2{
+  color: var(--text2-color);
 }
-.celda.pos_1_1 {
-  background-color: #ffe4e1;
+
+.izq_1 {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 10%;
+  left: 10%;
+  padding-right: 20px;
+  gap: 1vw;
 }
-.celda.pos_1_2 {
-  background-color: #90ee90;
+
+.izq_2 {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
 }
-.celda.pos_2_1 {
-  background-color: #d8bfd8;
+
+.izq_3 {
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  padding-right: 100px;
 }
-*/
+
+.lista_libros {
+  display: flex;
+  flex-direction: column;
+  height: 20vh; 
+  gap: 1vw;
+  overflow-y: auto; /* scroll vertical */
+}
+
+
+/*ABAJO*/
