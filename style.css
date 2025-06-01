@@ -84,7 +84,7 @@ h2 {
 }
 @media (max-width: 768px) {
   .btn_arriba {
-    top: 4rem !important; /* en lugar de 1rem */
+    top: 2rem !important; /* en lugar de 1rem */
   }
 }
 
@@ -97,7 +97,7 @@ h2 {
 
 @media (max-width: 768px) {
   .btn_abajo {
-    bottom: 4rem !important; /* en lugar de 1rem */
+    bottom: 6rem !important; /* en lugar de 1rem */
   }
 }
 
