@@ -1,7 +1,7 @@
 export const discs = [
   {
     image: "./img/disco1.jpg",
-    caption: "árabe",
+    caption: "cançons d'amor i de mort",
     bgColor: "#000",
     btnColor: "#f00",
   },

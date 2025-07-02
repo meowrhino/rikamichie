@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+JP:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
 
 html,
 body {
@@ -6,7 +7,8 @@ body {
   padding: 0;
   overflow: hidden;
   box-sizing: border-box;
-  font-family: "Instrument Serif", serif;
+  /* font-family: "Instrument Serif", serif; */
+  font-family: "EB Garamond", serif;
 }
 
 a {
@@ -23,14 +25,14 @@ h2 {
 
 #content {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 .celda {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   display: none;
 
   margin: 0;
@@ -51,7 +53,7 @@ h2 {
 
 .boton-nav {
   position: absolute;
-  font-family: "Instrument Serif", serif;
+  font-family: "EB Garamond", serif;
   font-size: 1rem;
 
   padding: 0;
@@ -77,39 +79,28 @@ h2 {
 }
 
 .btn_arriba {
-  top: 1rem;
+  top: 3dvh;
   left: 50%;
   transform: translateX(-50%) rotate(0deg);
   transform-origin: center;
 }
-@media (max-width: 768px) {
-  .btn_arriba {
-    top: 2rem !important; /* en lugar de 1rem */
-  }
-}
 
 .btn_abajo {
-  bottom: 1rem;
+  bottom: 3dvh;
   left: 50%;
   transform: translateX(-50%) rotate(180deg);
   transform-origin: center;
 }
 
-@media (max-width: 768px) {
-  .btn_abajo {
-    bottom: 6rem !important; /* en lugar de 1rem */
-  }
-}
-
 .btn_derecha {
-  right: 0rem;
+  right: 1dvw;
   top: 50%;
   transform: translateY(-50%) rotate(90deg);
   transform-origin: center;
 }
 
 .btn_izquierda {
-  left: 0rem;
+  left: 1dvw;
   top: 50%;
   transform: translateY(-50%) rotate(270deg);
   transform-origin: center;
@@ -129,8 +120,8 @@ h2 {
   position: absolute;
   top: 15%;
   left: 18%;
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-family: "EB Garamond", serif;
+  font-size: clamp(1.5rem, 5dvw, 3rem);
 }
 
 /* 1) Asegúrate de que el wrapper no le ponga ancho fijo */
@@ -139,11 +130,11 @@ h2 {
 }
 
 /* 2) A la imagen: ocupa todo el ancho del wrapper, 
-      pero siempre entre 50px y 400px, ideal 30vw */
+      pero siempre entre 50px y 400px, ideal 30dvw */
 .inguma img {
   display: block;
   width: 100%;
-  max-width: clamp(50px, 30vw, 400px);
+  max-width: clamp(50px, 30dvw, 400px);
   height: auto; /* conserva proporción */
 
   position: absolute;
@@ -169,14 +160,21 @@ h2 {
 
 /* PALETA PARA LA PANTALLA IZQUIERDA */
 .celda.izquierda {
-  --bg-color: #16610e;
-  --text-color: #fed16a;
-  --text2-color: #fff4a4;
-  --btn-color: #f97a00;
+  --bg-color: black;
+  --text-color: DeepPink;
+  --text2-color: LawnGreen;
+  --btn-color: LawnGreen;
 }
 
-.izquierda h2 {
+.izquierda {
+  font-size: 2rem;
+}
+
+.izquierda h2,
+.izquierda h3 {
   color: var(--text2-color);
+  font-weight: 300;
+  font-size: 2rem;
 }
 
 .izq_1 {
@@ -186,7 +184,7 @@ h2 {
   top: 10%;
   left: 10%;
   padding-right: 20px;
-  gap: 1vw;
+  gap: 1dvw;
 }
 
 .izq_2 {
@@ -205,8 +203,8 @@ h2 {
 .lista_libros {
   display: flex;
   flex-direction: column;
-  height: 20vh;
-  gap: 1vw;
+  height: 20dvh;
+  gap: 1dvw;
   overflow-y: auto; /* scroll vertical */
 }
 
@@ -233,6 +231,71 @@ h2 {
 }
 
 /*DERECHA*/
+
+.celda.derecha .btn_izquierda {
+  --btn-color: deeppink;
+}
+
+.der_1_layout {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100dvw;
+  height: 100dvh;
+  z-index: 1;
+  /* Si lo quieres en una celda .derecha, usa height: 100% y quita absolute */
+}
+
+.der_1_img {
+  flex: 2 1 0;
+  width: 100%;
+  min-height: 0;
+  min-width: 0;
+  background-image: url("img/derecha.jpg");
+  background-size: cover; /* que cubra el área aunque recorte */
+  background-position: center; /* siempre centrada */
+  background-repeat: no-repeat;
+  /* opcional: transición suave si cambias de imagen */
+  transition: background-image 0.6s;
+  position: relative;
+}
+
+.der_1_texto {
+  display: flex;
+  flex: 0.75 1 0;
+  align-items: baseline;
+  justify-content: center;
+  font-family: "EB Garamond", serif;
+  font-size: clamp(5rem, 3dvw, 10rem);
+  color: black;
+  background: deeppink; /* o tu var(--btn-color) si prefieres */
+}
+
+
+
+.der_tipos,
+.der_1_img span {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+
+  position: absolute;
+  bottom: 2dvh;
+
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.der_1_img span {
+  color: deeppink;
+font-size: clamp(5rem, 3dvw, 10rem);
+}
+
+/*
 .celda.derecha {
   --bg-color: #333;
   --text-color: #333;
@@ -245,7 +308,7 @@ h2 {
   flex-direction: column;
   bottom: 0%;
   right: 0%;
-  gap: 1vw;
+  gap: 1dvw;
 }
 
 .der_1 > * {
@@ -256,7 +319,7 @@ h2 {
     var(--bg-color) 100%
   );
   background-color: var(--btn-color);
-  padding: 1vw 2vw;
+  padding: 1dvw 2dvw;
   position: relative;
   padding-right: 2rem;
   padding-bottom: 1rem;
@@ -271,3 +334,8 @@ h2 {
   transform-origin: right;
   transition: all 1s ease;
 }
+
+#carousel-caption {
+  font-size: 2rem;
+}
+  */
