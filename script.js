@@ -66,7 +66,18 @@ function cargarContenido(wrapper, archivo) {
           console.log("initCarousel lanzado desde abajo.html");
           actualizarVista(); // 🔥 fuerza a generar botones otra vez
         }, 50); // con un poco de delay para asegurarse
-        
+      }
+
+      if (archivo.endsWith("arriba.html")) {
+        import("./script/arriba.js")
+          .then((mod) => {
+            setTimeout(() => {
+              mod.generarVistaArriba();
+              console.log("generarVistaArriba lanzado desde arriba.html");
+              actualizarVista();
+            }, 50);
+          })
+          .catch((err) => console.error("Error al cargar arriba.js:", err));
       }
     })
     .catch((err) => {
@@ -83,7 +94,23 @@ function actualizarVista() {
 
   let selector = ".pos_" + posY + "_" + posX;
   let activa = document.querySelector(selector);
+
   if (activa) {
+    // 1. Si es la celda .abajo y aún no hay color dinámico aplicado...
+    if (activa.classList.contains("abajo") && window.discs) {
+      document
+        .querySelector('meta[name="theme-color"]')
+        .setAttribute("content", window.discs[0].bgColor); // primer disco
+    } else {
+      // 2. Para el resto: usar --theme-color del CSS como siempre
+      const themeColor = getComputedStyle(activa)
+        .getPropertyValue("--theme-color")
+        .trim();
+      document
+        .querySelector('meta[name="theme-color"]')
+        .setAttribute("content", themeColor);
+    }
+
     activa.classList.add("activa");
     crearBotonesNavegacion(activa);
   }

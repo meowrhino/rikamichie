@@ -30,10 +30,11 @@ h2 {
 }
 
 .celda {
-  position: absolute;
-  width: 100dvw;
-  height: 100dvh;
-  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute; /* necesario para superponerlas */
+  top: 0;
+  left: 0;
 
   margin: 0;
   padding: 0;
@@ -43,13 +44,17 @@ h2 {
   color: var(--text-color, inherit);
 
   opacity: 0;
-  transition: opacity 1s ease;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+  display: flex; /* que todas usen flex siempre */
 }
 
 .celda.activa {
-  display: flex;
   opacity: 1;
+  pointer-events: auto;
 }
+
+/*BOTONES NAVEGACIÓN*/
 
 .boton-nav {
   position: absolute;
@@ -106,10 +111,8 @@ h2 {
   transform-origin: center;
 }
 
-/*cada una de las secciones*/
 /*CENTRO*/
 
-/* PALETA PARA LA PANTALLA CENTRAL */
 .celda.centro {
   --bg-color: #ffffff;
   --text-color: #000000;
@@ -158,10 +161,10 @@ h2 {
 
 /*IZQUIERDA*/
 
-/* PALETA PARA LA PANTALLA IZQUIERDA */
 .celda.izquierda {
   --bg-color: black;
   --text-color: DeepPink;
+  --theme-color: black;
   --text2-color: LawnGreen;
   --btn-color: LawnGreen;
 }
@@ -212,10 +215,7 @@ h2 {
 }
 
 /*ABAJO*/
-/* .celda.abajo {
-  --text-color: #333;
-  --btn-color: #f00;
-} */
+
 .carousel {
   position: absolute;
   top: 50%;
@@ -259,6 +259,9 @@ h2 {
 
 .celda.derecha .btn_izquierda {
   --btn-color: deeppink;
+}
+.celda.derecha {
+  --theme-color: deeppink;
 }
 
 .der_1_layout {
@@ -423,8 +426,8 @@ h2 {
   font-size: 2rem;
 }
   */
- /*abajo__abajo*/
- .footer-abajo {
+/*abajo__abajo*/
+.footer-abajo {
   position: absolute;
   bottom: 2dvh;
   left: 50%;
@@ -440,5 +443,63 @@ h2 {
 }
 
 .footer-abajo a:hover {
+  text-decoration: underline;
+}
+
+/*ARRIBA*/
+
+.celda.arriba {
+  --theme-color: red;
+}
+
+.celda.arriba .boton-nav {
+  color: red;
+}
+
+.arriba-layout {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.arriba-galeria {
+  position: relative;
+  width: 100%;
+  background: red;
+  overflow: hidden;
+}
+
+.galeria-item img {
+  width: 100px;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.galeria-item .texto {
+  font-size: clamp(1rem, 1dvw, 2rem);
+  color: white;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.arriba-timeline {
+  padding: 1rem;
+  background: Navy;
+  color: white;
+  font-size: clamp(1rem, 1dvw, 2rem);
+}
+
+.arriba-timeline .evento {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: right;
+}
+
+.evento sup {
+  color: DodgerBlue;
+}
+
+.arriba-timeline a {
+  color: white;
   text-decoration: underline;
 }

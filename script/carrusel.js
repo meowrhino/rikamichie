@@ -22,6 +22,8 @@ export const discs = [
   },
 ];
 
+window.discs = discs; 
+
 let currentIndex = 0;
 let imgEl;
 let captionEl;
@@ -89,6 +91,11 @@ export function initCarousel() {
 
   // 3) Siempre repintar vista al (re)iniciar
   updateCarousel();
+
+  // 🌈 Aplica color inicial del primer disco al meta theme-color
+  document
+    .querySelector('meta[name="theme-color"]')
+    .setAttribute("content", discs[currentIndex].bgColor);
 }
 
 function updateCarousel() {
@@ -103,7 +110,12 @@ function updateCarousel() {
   const celdaAbajo = document.querySelector(".celda.abajo");
   if (celdaAbajo) {
     celdaAbajo.style.backgroundColor = disc.bgColor;
-    // Estilizar botonos grid-nav existentes
+    // 🌈 ACTUALIZA LA BARRA SUPERIOR EN iOS AQUÍ:
+    document
+      .querySelector('meta[name="theme-color"]')
+      .setAttribute("content", disc.bgColor);
+
+    // Estilizar botones grid-nav existentes
     celdaAbajo.querySelectorAll(".boton-nav").forEach((btn) => {
       btn.style.color = disc.btnColor;
     });
