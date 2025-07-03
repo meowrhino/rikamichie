@@ -4,18 +4,21 @@ export const discs = [
     caption: "cançons d'amor i de mort",
     bgColor: "#000",
     btnColor: "#f00",
+    link: "https://ejemplo.com/disco1",
   },
   {
     image: "./img/disco2.jpg",
     caption: "cat pop",
     bgColor: "#00f",
     btnColor: "#fff",
+    link: "https://ejemplo.com/disco2",
   },
   {
     image: "./img/disco3.jpg",
     caption: "sanson i dalila",
     bgColor: "#f0f",
     btnColor: "#fff",
+    link: "https://ejemplo.com/disco3",
   },
 ];
 
@@ -31,27 +34,35 @@ let observerInitialized = false;
 
 export function initCarousel() {
   // Referencias al DOM
-  imgEl     = document.getElementById("carousel-image");
+  imgEl = document.getElementById("carousel-image");
   captionEl = document.getElementById("carousel-caption");
-  prevBtn   = document.getElementById("prev-btn");
-  nextBtn   = document.getElementById("next-btn");
+  prevBtn = document.getElementById("prev-btn");
+  nextBtn = document.getElementById("next-btn");
 
   // 1) Enlazar listeners (solo una vez)
   if (!listenersInitialized) {
+    // botones prev y next
     prevBtn.addEventListener("click", () => {
       if (currentIndex > 0) {
         currentIndex--;
-        console.log("◀️ PREV CLICKED - new index:", currentIndex);
         updateCarousel();
       }
     });
     nextBtn.addEventListener("click", () => {
       if (currentIndex < discs.length - 1) {
         currentIndex++;
-        console.log("▶️ NEXT CLICKED - new index:", currentIndex);
         updateCarousel();
       }
     });
+
+    // NUEVO: click en la imagen para abrir link
+    imgEl.addEventListener("click", () => {
+      const disc = discs[currentIndex];
+      if (disc.link) {
+        window.open(disc.link, "_blank");
+      }
+    });
+
     listenersInitialized = true;
   }
 
@@ -103,6 +114,6 @@ function updateCarousel() {
   nextBtn.style.color = disc.btnColor;
 
   // Desactivar extremos
-  prevBtn.disabled = currentIndex === 0;
-  nextBtn.disabled = currentIndex === discs.length - 1;
+  prevBtn.classList.toggle("desactivado", currentIndex === 0);
+  nextBtn.classList.toggle("desactivado", currentIndex === discs.length - 1);
 }
