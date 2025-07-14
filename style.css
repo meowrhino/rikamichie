@@ -11,6 +11,13 @@ body {
   font-family: "EB Garamond", serif;
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
 a {
   color: var(--btn-color);
   text-decoration: none;
@@ -40,8 +47,8 @@ h2 {
   padding: 0;
   box-sizing: border-box;
 
-  background-color: var(--bg-color, transparent);
-  color: var(--text-color, inherit);
+  background-color: var(--bg-color);
+  color: var(--text-color);
 
   opacity: 0;
   pointer-events: none;
@@ -58,8 +65,7 @@ h2 {
 
 .boton-nav {
   position: absolute;
-  font-family: "EB Garamond", serif;
-  font-size: 1rem;
+  font-size: clamp(1rem, 2dvw, 2rem);
 
   padding: 0;
   border: none;
@@ -69,18 +75,6 @@ h2 {
   z-index: 1;
 
   color: var(--btn-color, inherit);
-}
-
-@media (min-width: 768px) and (max-width: 1279px) {
-  .boton-nav {
-    font-size: 1.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .boton-nav {
-    font-size: 2rem;
-  }
 }
 
 .btn_arriba {
@@ -123,7 +117,6 @@ h2 {
   position: absolute;
   top: 15%;
   left: 18%;
-  font-family: "EB Garamond", serif;
   font-size: clamp(1.5rem, 5dvw, 3rem);
 }
 
@@ -190,15 +183,6 @@ h2 {
   gap: 1dvw;
 }
 
-/*
-
-.izq_2 {
-  position: absolute;
-  bottom: 5dvh;
-  right: 5dvw;
-}
-  */
-
 .izq_3 {
   position: absolute;
   left: 10dvw;
@@ -257,11 +241,9 @@ h2 {
 
 /*DERECHA*/
 
-.celda.derecha .btn_izquierda {
-  --btn-color: crimson;
-}
 .celda.derecha {
   --theme-color: crimson;
+    --btn-color: crimson;
 }
 
 .der_1_layout {
@@ -299,7 +281,6 @@ h2 {
 
   padding: 1.5rem;
 
-  font-family: "EB Garamond", serif;
   font-size: clamp(5rem, 3dvw, 10rem);
   color: white;
   background: crimson; /* o tu var(--btn-color) si prefieres */
@@ -393,51 +374,8 @@ h2 {
   font-size: clamp(5rem, 3dvw, 10rem);
 }
 
-/*
-.celda.derecha {
-  --bg-color: #333;
-  --text-color: #333;
-  --btn-color: #b83f69;
-}
-
-.der_1 {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  bottom: 0%;
-  right: 0%;
-  gap: 1dvw;
-}
-
-.der_1 > * {
-  background: linear-gradient(
-    to right,
-    var(--btn-color) 0%,
-    var(--btn-color) 30%,
-    var(--bg-color) 100%
-  );
-  background-color: var(--btn-color);
-  padding: 1dvw 2dvw;
-  position: relative;
-  padding-right: 2rem;
-  padding-bottom: 1rem;
-  border-radius: 1rem 0.1rem 0.1rem 0.1rem;
-}
-
-.der_1 > *:hover {
-  background: var(--btn-color);
-  color: var(--bg-color);
-
-  transform: scaleX(1.2);
-  transform-origin: right;
-  transition: all 1s ease;
-}
-
-#carousel-caption {
-  font-size: 2rem;
-}
-  */
 /*abajo__abajo*/
+
 .footer-abajo {
   position: absolute;
   bottom: 2dvh;
@@ -468,43 +406,24 @@ h2 {
 /*ARRIBA*/
 
 .celda.arriba {
-  --theme-color: blue;
+  --bg-color: navy;
+  --text-color: crimson;
+  --btn-color: red;
 }
 
-.celda.arriba .boton-nav {
-  color: red;
+.evento sup {
+  color: LightSkyBlue;
 }
-
-/*
-.arriba-galeria {
-  position: relative;
-  width: 100%;
-  background: red;
-  overflow: hidden;
-}
-
-.galeria-item img {
-  width: 100px;
-  height: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.galeria-item .texto {
-  font-size: clamp(1rem, 1dvw, 2rem);
-  color: white;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-*/
 
 .arriba-timeline {
-  width: 100vw;
-  height: 90vh;
+  width: 100dvw;
+  height: clamp(80vh, 5vh + 80vh, 90vh);
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  background: Navy;
-  color: white;
+
   font-size: clamp(1rem, 1dvw, 2rem);
+  overflow-y: scroll;
 }
 
 .arriba-timeline .evento {
@@ -512,12 +431,4 @@ h2 {
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
-}
-
-.evento sup {
-  color: LightSkyBlue;
-}
-
-.arriba-timeline a {
-  color: red;
 }
