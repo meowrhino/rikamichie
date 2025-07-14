@@ -163,10 +163,10 @@ h2 {
 
 .celda.izquierda {
   --bg-color: black;
-  --text-color: DeepPink;
+  --text-color: Gainsboro;
   --theme-color: black;
-  --text2-color: LawnGreen;
-  --btn-color: LawnGreen;
+  --text2-color: red;
+  --btn-color: red;
 }
 
 .izquierda {
@@ -258,10 +258,10 @@ h2 {
 /*DERECHA*/
 
 .celda.derecha .btn_izquierda {
-  --btn-color: deeppink;
+  --btn-color: crimson;
 }
 .celda.derecha {
-  --theme-color: deeppink;
+  --theme-color: crimson;
 }
 
 .der_1_layout {
@@ -294,16 +294,25 @@ h2 {
 
 .der_1_texto {
   display: flex;
-  flex: 0.75 1 0;
   align-items: baseline;
   justify-content: center;
+
+  padding: 1.5rem;
+
   font-family: "EB Garamond", serif;
   font-size: clamp(5rem, 3dvw, 10rem);
-  color: black;
-  background: deeppink; /* o tu var(--btn-color) si prefieres */
+  color: white;
+  background: crimson; /* o tu var(--btn-color) si prefieres */
 }
 
-.der_tipos,
+.der_tipos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
 .der_1_img span {
   display: flex;
   justify-content: center;
@@ -314,6 +323,7 @@ h2 {
 
   left: 50%;
   transform: translateX(-50%);
+  font-size: 1.2rem;
 }
 
 .der_tipos p:hover {
@@ -378,7 +388,8 @@ h2 {
 }
 
 .der_1_img span {
-  color: deeppink;
+  color: crimson;
+  text-shadow: 1px 1px 2px black;
   font-size: clamp(5rem, 3dvw, 10rem);
 }
 
@@ -446,23 +457,25 @@ h2 {
   text-decoration: underline;
 }
 
+.contacto-abajo img {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*ARRIBA*/
 
 .celda.arriba {
-  --theme-color: red;
+  --theme-color: blue;
 }
 
 .celda.arriba .boton-nav {
   color: red;
 }
 
-.arriba-layout {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
+/*
 .arriba-galeria {
   position: relative;
   width: 100%;
@@ -479,10 +492,15 @@ h2 {
 .galeria-item .texto {
   font-size: clamp(1rem, 1dvw, 2rem);
   color: white;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+*/
 
 .arriba-timeline {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   background: Navy;
   color: white;
@@ -490,16 +508,16 @@ h2 {
 }
 
 .arriba-timeline .evento {
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
-  justify-content: right;
+  justify-content: center;
 }
 
 .evento sup {
-  color: DodgerBlue;
+  color: LightSkyBlue;
 }
 
 .arriba-timeline a {
-  color: white;
-  text-decoration: underline;
+  color: red;
 }

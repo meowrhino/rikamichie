@@ -1,101 +1,141 @@
 // Array de objetos
 export const itemsArriba = [
   {
-    item: "img/arriba/1.jpg",
-    titulo: "ensayo visual",
-    link: "https://ejemplo.com/ensayo-visual",
-    fecha: "2024-06"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/2.jpg",
-    titulo: "una postal desde el limbo",
-    link: "https://ejemplo.com/postal",
-    fecha: "2024-04"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/3.jpg",
-    titulo: "rituales domésticos",
-    link: "https://ejemplo.com/rituales",
-    fecha: "2023-11"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/4.jpg",
-    titulo: "carta a nadie",
-    link: "https://ejemplo.com/carta",
-    fecha: "2023-07"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/5.jpg",
-    titulo: "microclimas del deseo",
-    link: "https://ejemplo.com/microclimas",
-    fecha: "2023-05"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/6.jpg",
-    titulo: "pliegues del archivo",
-    link: "https://ejemplo.com/pliegues",
-    fecha: "2022-12"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/7.jpg",
-    titulo: "tejido espectral",
-    link: "https://ejemplo.com/tejido",
-    fecha: "2022-09"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/8.jpg",
-    titulo: "técnicas de desaparición",
-    link: "https://ejemplo.com/desaparicion",
-    fecha: "2022-06"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/1.jpg",
-    titulo: "ensayo visual",
-    link: "https://ejemplo.com/ensayo-visual",
-    fecha: "2024-06"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/2.jpg",
-    titulo: "una postal desde el limbo",
-    link: "https://ejemplo.com/postal",
-    fecha: "2024-04"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/3.jpg",
-    titulo: "rituales domésticos",
-    link: "https://ejemplo.com/rituales",
-    fecha: "2023-11"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/4.jpg",
-    titulo: "carta a nadie",
-    link: "https://ejemplo.com/carta",
-    fecha: "2023-07"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/5.jpg",
-    titulo: "microclimas del deseo",
-    link: "https://ejemplo.com/microclimas",
-    fecha: "2023-05"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/6.jpg",
-    titulo: "pliegues del archivo",
-    link: "https://ejemplo.com/pliegues",
-    fecha: "2022-12"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/7.jpg",
-    titulo: "tejido espectral",
-    link: "https://ejemplo.com/tejido",
-    fecha: "2022-09"
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
   },
   {
-    item: "img/arriba/8.jpg",
-    titulo: "técnicas de desaparición",
-    link: "https://ejemplo.com/desaparicion",
-    fecha: "2022-06"
-  }
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  {
+    titulo: "Ofrena Musical con Pol Roig",
+    link: "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+    fecha: "2024-10"
+  },
+  
 ];
 
 // Función para generar la vista
@@ -120,13 +160,12 @@ export function generarVistaArriba() {
   }
 
   // Asignar proporciones
-  galeriaDiv.style.height = "66.66vh";
-  galeriaDiv.style.position = "relative";
 
-  timelineDiv.style.height = "33.33vh";
+  timelineDiv.style.height = "100vh";
   timelineDiv.style.overflowY = "auto";
 
   // GALERÍA (coordenadas aleatorias entre 5% y 85%)
+  /*
   itemsArriba.forEach(item => {
     const a = document.createElement("a");
     a.href = item.link;
@@ -146,7 +185,7 @@ export function generarVistaArriba() {
 
     galeriaDiv.appendChild(a);
   });
-
+*/
   // TIMELINE (ordenado por fecha descendente)
   itemsArriba
     .slice()
