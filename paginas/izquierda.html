@@ -13,11 +13,11 @@
 
     <script>
         const RSS_URL = "https://rikamichie.substack.com/feed"; // cambia esto
-        const CORS_PROXY = "https://api.allorigins.win/get?url=";
+        const CORS_PROXY = "https://corsproxy.io/?";
 
         async function cargarPosts() {
             const response = await fetch(CORS_PROXY + encodeURIComponent(RSS_URL));
-            const data = await response.json();
+            const data = await response.text();
             const parser = new DOMParser();
             const xml = parser.parseFromString(data.contents, "text/xml");
             const items = xml.querySelectorAll("item");
