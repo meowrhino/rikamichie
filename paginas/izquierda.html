@@ -12,38 +12,44 @@
     </div>
 
     <script>
-        const RSS_URL = "https://rikamichie.substack.com/feed"; // cambia esto
-        const CORS_PROXY = "https://corsproxy.io/?";
+  const RSS_URL = "https://rikamichie.substack.com/feed";
+  const CORS_PROXY = "https://corsproxy.io/?";
 
-        async function cargarPosts() {
-            const response = await fetch(CORS_PROXY + encodeURIComponent(RSS_URL));
-            const data = await response.text();
-            const parser = new DOMParser();
-            const xml = parser.parseFromString(data.contents, "text/xml");
-            const items = xml.querySelectorAll("item");
+  async function cargarPosts() {
+    try {
+      const response = await fetch(CORS_PROXY + encodeURIComponent(RSS_URL));
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-            const contenedor = document.querySelector(".lista_libros");
+      const xmlText = await response.text();            // → corregido: get text directamente
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(xmlText, "text/xml");
+      const items = xml.querySelectorAll("item");
 
-            items.forEach((item, index) => {
-                if (index >= 5) return; // solo los 5 primeros
+      const contenedor = document.querySelector(".lista_libros");
+      contenedor.innerHTML = "";  // limpia previamente
 
-                const titulo = item.querySelector("title").textContent;
-                const link = item.querySelector("link").textContent;
-                const fecha = item.querySelector("pubDate").textContent;
-                const resumen = item.querySelector("description").textContent;
+      items.forEach((item, idx) => {
+        if (idx >= 5) return;
 
-                const postHTML = `
-        <div class="post">
-          <h3><a href="${link}" target="_blank">${titulo}</a></h3>
-          <p><em>${new Date(fecha).toLocaleDateString()}</em></p>
-          <p>${resumen}</p>
-        </div>
-      `;
-                contenedor.innerHTML += postHTML;
-            });
-        }
+        const titulo = item.querySelector("title")?.textContent || "Sin título";
+        const link = item.querySelector("link")?.textContent || "#";
+        const fecha = item.querySelector("pubDate")?.textContent;
+        const resumen = item.querySelector("description")?.textContent || "";
 
-        cargarPosts();
-    </script>
+        const postHTML = `
+          <div class="post">
+            <h3><a href="${link}" target="_blank">${titulo}</a></h3>
+            <p><em>${fecha ? new Date(fecha).toLocaleDateString() : ""}</em></p>
+            <p>${resumen}</p>
+          </div>`;
+        contenedor.insertAdjacentHTML("beforeend", postHTML);
+      });
+    } catch (e) {
+      console.error("Error al cargar RSS:", e);
+    }
+  }
+
+  cargarPosts();
+</script>
 
 </body>
