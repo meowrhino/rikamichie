@@ -12,17 +12,17 @@
     </div>
 
     <script>
-        fetch("/feed.json")
+        fetch("https://rikafeed.onrender.com/feed")
             .then(r => r.json())
             .then(feed => {
-                const items = feed.entries.slice(0, 5);
+                const items = feed.items.slice(0, 5); // ← nota: aquí puede que sea feed.items, no feed.entries
                 const cont = document.querySelector(".lista_libros");
                 cont.innerHTML = items.map(post => `
-        <div class="post">
-          <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
-          <p><em>${new Date(post.published).toLocaleDateString()}</em></p>
-          <p>${post.description}</p>
-        </div>`).join("");
+    <div class="post">
+      <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
+      <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
+      <p>${post.contentSnippet}</p>
+    </div>`).join("");
             })
             .catch(console.error);
     </script>
