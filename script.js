@@ -74,7 +74,7 @@ function cargarContenido(wrapper, archivo) {
         if (cont) {
           cont.innerHTML = '<div class="spinner"></div>';
 
-          fetch("paginas/feed.html")
+          fetch("feed.html")
             .then((r) => {
               console.log("Cargando feed local, status:", r.status);
               if (!r.ok) throw new Error("No se pudo cargar el feed local");
