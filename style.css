@@ -169,7 +169,8 @@ h2 {
 }
 
 .izquierda h2,
-.izquierda h3 {
+.izquierda h3, 
+.izquierda h4 {
   color: var(--text2-color);
   font-weight: 300;
   font-size: 2rem;
@@ -212,15 +213,21 @@ h2 {
   margin-top: 1em;  /* O el espacio que quieras */
 }
 
+.izq_2 {
+    position: fixed;
+    bottom: 1rem;
+    overflow-x: scroll;
+}
+
 .indice_libros ul {
   display: flex;
   flex-direction: row;
   overflow-x: auto;
-  padding: 0.5em 0;
-  margin: 0;
+
+
   list-style: none;
-  gap: 1.2em; /* Separación entre items */
-  scrollbar-width: thin; /* Para Firefox */
+  gap: 1.2em; 
+
 }
 
 .indice_libros li {
@@ -233,15 +240,8 @@ h2 {
 .indice_libros a {
   display: block;
   padding: 0.5em 1em;
-  border-radius: 1em;
   text-decoration: none;
   color: inherit;
-  background: rgba(255,255,255,0.07); /* O el color que prefieras */
-  transition: background 0.2s;
-  font-size: 1em;
-}
-.indice_libros a:hover {
-  background: rgba(255,255,255,0.17);
 }
 
 /*ABAJO*/
