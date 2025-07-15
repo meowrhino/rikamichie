@@ -72,7 +72,7 @@ function cargarContenido(wrapper, archivo) {
           ?.parentElement.querySelector(".izq_2 .indice_libros");
         if (cont) {
           cont.innerHTML = '<div class="spinner"></div>';
-          fetch("paginas/feed.json")
+          fetch("feed.json")
             .then((r) => {
               console.log("Fetch lanzado, status:", r.status);
               if (!r.ok)
