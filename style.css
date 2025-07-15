@@ -176,11 +176,11 @@ h2 {
   margin: none;
 }
 
-.izquierda h3 {
-  font-size: 1.8rem;
+.izquierda h2 {
+  font-size: 2rem;
 }
 
-.izquierda h4 {
+.izquierda h3 {
   font-size: 1.5rem;
 }
 
@@ -204,15 +204,17 @@ h2 {
 .izq_3 {
   position: absolute;
   left: 10dvw;
-  bottom: 10dvw;
+  bottom: 10dvh;
   padding-right: 10dvw;
 }
+
 
 @media (min-width: 768px) {
   .izq_1, .izq_3 {
     left: 7.5dvw;
   }
 }
+
 @media (min-width: 1200px) {
   .izq_1, .izq_3 {
     left: 5dvw;
@@ -250,6 +252,21 @@ h2 {
 .indice_libros li {
   list-style: none;
   white-space: nowrap;
+}
+
+.post iframe,
+.youtube-wrap,
+.youtube-inner,
+#player {
+  width: 100% !important;
+  max-width: 100%;
+  height: auto !important;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: 1em;
+  margin: 1.5em 0;
+  box-shadow: 0 0 12px #0007;
+  background: #000;
 }
 
 /*ABAJO*/
