@@ -208,6 +208,17 @@ h2 {
   padding-right: 10dvw;
 }
 
+@media (min-width: 768px) {
+  .izq_1, .izq_3 {
+    left: 7.5dvw;
+  }
+}
+@media (min-width: 1200px) {
+  .izq_1, .izq_3 {
+    left: 5dvw;
+  }
+}
+
 .lista_libros {
   display: flex;
   flex-direction: column;
@@ -217,10 +228,12 @@ h2 {
   width: 80dvw;
 }
 
-.break {
-  display: block;
-  height: 1.4em;
-  content: "";
+.post_content p{
+  margin: 1rem 0rem;
+}
+
+.post_date {
+  font-size: 1.5rem;
 }
 
 .indice_libros ul {

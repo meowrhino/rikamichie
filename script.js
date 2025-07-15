@@ -88,8 +88,8 @@ function cargarContenido(wrapper, archivo) {
                   (post, i) => `
       <div class="post" id="post-${i}">
         <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
-        <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
-<div>
+        <p><em class="post_date">${new Date(post.pubDate).toLocaleDateString()}</em></p>
+<div class="post_content">
   ${post["content:encoded"] || post["content:encodedSnippet"] || ""}
 </div>
       </div>
