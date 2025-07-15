@@ -196,9 +196,11 @@ h2 {
 
 .izq_2 {
   position: fixed;
-  bottom: 0dvh;
+  bottom: 2.5dvh;
   overflow-x: scroll;
   width: 100vw;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .izq_3 {
@@ -207,15 +209,16 @@ h2 {
   bottom: 10dvh;
 }
 
-
 @media (min-width: 768px) {
-  .izq_1, .izq_3 {
+  .izq_1,
+  .izq_3 {
     left: 7.5dvw;
   }
 }
 
 @media (min-width: 1200px) {
-  .izq_1, .izq_3 {
+  .izq_1,
+  .izq_3 {
     left: 5dvw;
   }
 }
@@ -230,7 +233,7 @@ h2 {
   width: 80dvw;
 }
 
-.post_content p{
+.post_content p {
   margin: 1rem 0rem;
 }
 
@@ -464,12 +467,20 @@ h2 {
   text-decoration: underline;
 }
 
-.contacto-abajo img {
+.contacto-abajo {
   width: 100dvw;
   height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.contacto-abajo img {
+  width: auto;      /* o el tamaño que tú quieras */
+  height: 60dvh;    /* por ejemplo, que no sea enorme */
+  max-width: 90dvw;
+  max-height: 90dvh;
+  object-fit: contain;
+  display: block;
 }
 
 /*ARRIBA*/
@@ -490,8 +501,6 @@ h2 {
   height: 85dvh;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-
   font-size: clamp(1rem, 1dvw, 2rem);
   overflow-y: scroll;
 }
