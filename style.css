@@ -236,6 +236,8 @@ h2 {
 
 .post_date {
   font-size: 1.5rem;
+  display: flex;
+  align-items: right;
 }
 
 .indice_libros ul {
@@ -474,8 +476,9 @@ h2 {
 
 .celda.arriba {
   --bg-color: navy;
+  --theme-color: navy;
   --text-color: crimson;
-  --btn-color: red;
+  --btn-color: crimson;
 }
 
 .evento sup {
@@ -484,7 +487,7 @@ h2 {
 
 .arriba-timeline {
   width: 100dvw;
-  height: clamp(80vh, 5vh + 80vh, 90vh);
+  height: 85dvh;
   display: flex;
   flex-direction: column;
   padding: 1rem;
