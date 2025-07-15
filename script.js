@@ -80,7 +80,7 @@ function cargarContenido(wrapper, archivo) {
                 cont.innerHTML = "<p>No hay posts para mostrar.</p>";
                 return;
               }
-              const items = feed.items.slice(0, 5);
+              const items = feed.items;
 
               // Render posts respetando párrafos
               cont.innerHTML = items
