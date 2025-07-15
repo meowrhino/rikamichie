@@ -64,81 +64,83 @@ function cargarContenido(wrapper, archivo) {
     .then((html) => {
       wrapper.innerHTML = html;
 
-      // Inyectar el feed de Substack si es la celda de la izquierda
+      // Si es la celda de la izquierda, cargamos el feed local
       if (archivo.endsWith("izquierda.html")) {
         const cont = wrapper.querySelector(".lista_libros");
         const contIndice = wrapper
           .closest(".celda")
           ?.parentElement.querySelector(".izq_2 .indice_libros");
+
         if (cont) {
           cont.innerHTML = '<div class="spinner"></div>';
-          fetch("https://rikamichie.onrender.com/feed")
+
+          fetch("paginas/feed.html")
             .then((r) => {
-              console.log("Fetch lanzado, status:", r.status);
-              if (!r.ok)
-                throw new Error("Respuesta de red incorrecta: " + r.status);
-              return r.json();
+              console.log("Cargando feed local, status:", r.status);
+              if (!r.ok) throw new Error("No se pudo cargar el feed local");
+              return r.text();
             })
-            .then((feed) => {
-              if (!feed || !feed.items) {
+            .then((html) => {
+              const tmp = document.createElement("div");
+              tmp.innerHTML = html;
+
+              const posts = tmp.querySelectorAll(".post");
+              if (!posts.length) {
                 cont.innerHTML = "<p>No hay posts para mostrar.</p>";
                 return;
               }
-              const items = feed.items;
 
-              // Render posts respetando párrafos
-              cont.innerHTML = items
-                .map(
-                  (post, i) => `
-      <div class="post" id="post-${i}">
-        <h2><a href="${post.link}" target="_blank">${post.title}</a></h2>
-        <p><em class="post_date">${new Date(
-          post.pubDate
-        ).toLocaleDateString()}</em></p>
-<div class="post_content">
-  ${limpiarSubstackExtras(
-    post["content:encoded"] || post["content:encodedSnippet"] || ""
-  )}
-</div>
-      </div>
-    `
-                )
-                .join("");
+              cont.innerHTML = ""; // limpiamos el loader
 
-              // Genera índice de anchors en .izq_2 si existe
+              posts.forEach((post, i) => {
+                post.id = `post-${i}`;
+
+                const contenido = post.querySelector(".post_content");
+                if (contenido) {
+                  contenido.innerHTML = htmlConParrafosYTitulos(
+                    limpiarSubstackExtras(contenido.innerHTML)
+                  );
+                }
+
+                cont.appendChild(post);
+              });
+
               if (contIndice) {
                 contIndice.innerHTML = `
-            <ul>
-              ${items
-                .map(
-                  (post, i) => `<li><a href="#post-${i}">${post.title}</a></li>`
-                )
-                .join("")}
-            </ul>
-          `;
+                  <ul>
+                    ${Array.from(posts)
+                      .map((post, i) => {
+                        const title =
+                          post.querySelector("h2 a")?.textContent ||
+                          `Post ${i + 1}`;
+                        return `<li><a href="#post-${i}">${title}</a></li>`;
+                      })
+                      .join("")}
+                  </ul>
+                `;
               }
             })
             .catch((err) => {
-              console.error("Error al cargar feed:", err);
+              console.error("Error al cargar feed local:", err);
               cont.innerHTML = "<p>Error al cargar posts :(</p>";
             });
         }
       }
 
+      // Si es la celda de abajo
       if (archivo.endsWith("abajo.html")) {
         setTimeout(() => {
           initCarousel();
-          console.log("initCarousel lanzado desde abajo.html");
-          actualizarVista(); // 🔥 fuerza a generar botones otra vez
-        }, 50); // con un poco de delay para asegurarse
+          actualizarVista();
+        }, 50);
       }
 
+      // Si es la celda de arriba
       if (archivo.endsWith("arriba.html")) {
         import("./script/arriba.js")
           .then((mod) => {
             setTimeout(() => {
               mod.generarVistaArriba();
-              console.log("generarVistaArriba lanzado desde arriba.html");
               actualizarVista();
             }, 50);
           })
