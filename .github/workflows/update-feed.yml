@@ -15,7 +15,7 @@ jobs:
 
       - name: Descargar feed HTML desde Render
         run: |
-          curl -s https://rikamichie.onrender.com/feed > paginas/feed.html
+          curl -s https://rikamichie.onrender.com/feed > paginas/feed.json
 
       - name: Commit y push si hay cambios
         run: |
