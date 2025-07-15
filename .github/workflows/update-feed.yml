@@ -1,0 +1,19 @@
+name: 📡 Actualizar RSS -> JSON
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Promptly-Technologies-LLC/rss-fetch-action@v2
+        with:
+          feed_url: 'https://rikamichie.substack.com/feed'
+          file_path: 'feed.json'
+          remove_published: true
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: '🔃 Actualizar feed'
+          file_pattern: 'feed.json'
