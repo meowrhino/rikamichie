@@ -245,8 +245,8 @@ h2 {
   flex-direction: row;
   overflow-x: auto;
   gap: 2rem;
-  margin: none;
-  padding: none;
+  margin: 0;
+  padding: 0;
 
   scrollbar-width: thin;
 }
