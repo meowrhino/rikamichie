@@ -1,8 +1,13 @@
 name: 📡 Actualizar RSS -> JSON
+
 on:
   schedule:
     - cron: '0 3 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -12,7 +17,7 @@ jobs:
         with:
           feed_url: 'https://rikamichie.substack.com/feed'
           file_path: 'feed.json'
-          remove_published: true
+          fetch_options: '{"headers":{"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}}'
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: '🔃 Actualizar feed'
