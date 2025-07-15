@@ -25,6 +25,10 @@ let posX = 1;
 
 // === FUNCIONES ===
 
+function limpiarSubstackExtras(html) {
+  return html.replace(/<p>Thanks for reading![\s\S]*?<\/form><\/p>/gi, "");
+}
+
 function crearPantallas() {
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
@@ -67,7 +71,7 @@ function cargarContenido(wrapper, archivo) {
           .closest(".celda")
           ?.parentElement.querySelector(".izq_2 .indice_libros");
         if (cont) {
-          cont.innerHTML = "<p>⏳ Cargando posts...</p>";
+          cont.innerHTML = '<div class="spinner"></div>';
           fetch("https://rikamichie.onrender.com/feed")
             .then((r) => {
               console.log("Fetch lanzado, status:", r.status);
@@ -88,9 +92,13 @@ function cargarContenido(wrapper, archivo) {
                   (post, i) => `
       <div class="post" id="post-${i}">
         <h2><a href="${post.link}" target="_blank">${post.title}</a></h2>
-        <p><em class="post_date">${new Date(post.pubDate).toLocaleDateString()}</em></p>
+        <p><em class="post_date">${new Date(
+          post.pubDate
+        ).toLocaleDateString()}</em></p>
 <div class="post_content">
-  ${post["content:encoded"] || post["content:encodedSnippet"] || ""}
+  ${limpiarSubstackExtras(
+    post["content:encoded"] || post["content:encodedSnippet"] || ""
+  )}
 </div>
       </div>
     `
@@ -153,6 +161,10 @@ function htmlConParrafos(texto) {
     .join("");
 }
     */
+
+function limpiarSubstackExtras(html) {
+  return html.replace(/<p>Thanks for reading![\s\S]*?<\/form><\/p>/gi, "");
+}
 
 function htmlConParrafosYTitulos(texto) {
   // Si ya hay <p> devolvemos tal cual
