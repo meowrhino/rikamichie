@@ -10,7 +10,7 @@ body {
   /* font-family: "Instrument Serif", serif; */
   font-family: "EB Garamond", serif;
 
-   scroll-behavior: smooth; 
+  scroll-behavior: smooth;
 }
 
 button,
@@ -169,12 +169,19 @@ h2 {
 }
 
 .izquierda h2,
-.izquierda h3, 
+.izquierda h3,
 .izquierda h4 {
   color: var(--text2-color);
   font-weight: 300;
-  font-size: 2rem;
-  margin: none
+  margin: none;
+}
+
+.izquierda h3 {
+  font-size: 1.8rem;
+}
+
+.izquierda h4 {
+  font-size: 1.5rem;
 }
 
 .izq_1 {
@@ -188,7 +195,10 @@ h2 {
 }
 
 .izq_2 {
-
+  position: fixed;
+  bottom: 0.5dvh;
+  overflow-x: scroll;
+  width: 100vw;
 }
 
 .izq_3 {
@@ -207,41 +217,26 @@ h2 {
   width: 80dvw;
 }
 
-.lista_libros br {
+.break {
   display: block;
+  height: 1.4em;
   content: "";
-  margin-top: 1em;  /* O el espacio que quieras */
-}
-
-.izq_2 {
-    position: fixed;
-    bottom: 1rem;
-    overflow-x: scroll;
 }
 
 .indice_libros ul {
   display: flex;
   flex-direction: row;
   overflow-x: auto;
+  gap: 2rem;
+  margin: none;
+  padding: none;
 
-
-  list-style: none;
-  gap: 1.2em; 
-
+  scrollbar-width: thin;
 }
 
 .indice_libros li {
   list-style: none;
-  margin: 0;
-  padding: 0;
   white-space: nowrap;
-}
-
-.indice_libros a {
-  display: block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  color: inherit;
 }
 
 /*ABAJO*/
@@ -289,7 +284,7 @@ h2 {
 
 .celda.derecha {
   --theme-color: crimson;
-    --btn-color: crimson;
+  --btn-color: crimson;
 }
 
 .der_1_layout {

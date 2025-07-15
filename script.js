@@ -89,9 +89,9 @@ function cargarContenido(wrapper, archivo) {
       <div class="post" id="post-${i}">
         <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
         <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
-        <div>${htmlConParrafosYTitulos(
-          post["content:encodedSnippet"] || ""
-        )}</div>
+<div>
+  ${post["content:encoded"] || post["content:encodedSnippet"] || ""}
+</div>
       </div>
     `
                 )
@@ -171,7 +171,7 @@ function htmlConParrafosYTitulos(texto) {
           return linea.trim();
         }
       });
-      return `<p>${lineas.join("<br>")}</p>`;
+      return `<p>${lineas.join('<div class="break"></div>')}</p>`;
     })
     .join("");
 }
