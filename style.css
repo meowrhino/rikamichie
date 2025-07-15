@@ -190,7 +190,6 @@ h2 {
   flex-direction: column;
   top: 10dvh;
   left: 10dvw;
-  padding-right: 20px;
   gap: 1dvh;
 }
 
@@ -199,8 +198,6 @@ h2 {
   bottom: 2.5dvh;
   overflow-x: scroll;
   width: 100vw;
-  padding-left: 2rem;
-  padding-right: 2rem;
 }
 
 .izq_3 {
@@ -248,8 +245,11 @@ h2 {
   flex-direction: row;
   overflow-x: auto;
   gap: 2rem;
+
   margin: 0;
   padding: 0;
+  padding-left: 2rem;
+  padding-right: 2rem;
 
   scrollbar-width: thin;
 }
@@ -503,6 +503,9 @@ h2 {
   flex-direction: column;
   font-size: clamp(1rem, 1dvw, 2rem);
   overflow-y: scroll;
+
+  padding-top: 2rem;
+
 }
 
 .arriba-timeline .evento {
