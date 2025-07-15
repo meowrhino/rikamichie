@@ -12,38 +12,24 @@
     </div>
 
     <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const cont = document.querySelector(".lista_libros");
-  console.log("Contenedor:", cont); // debería mostrar el div en consola
-
-  // Prueba con contenido estático
-  cont.innerHTML = `<div class="post">
-    <h3>¡Esto es una prueba!</h3>
-    <p>El contenedor funciona correctamente.</p>
-  </div>`;
-  console.log("Contenido estático renderizado");
-
-  // Luego puedes descomentar y volver a probar con datos reales
-  /*
-  fetch("https://rikamichie.onrender.com/feed")
-    .then(r => r.json())
-    .then(feed => {
-      const items = feed.items.slice(0, 5);
-      cont.innerHTML = items.map(post => `
-        <div class="post">
-          <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
-          <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
-          <div>${post["content:encodedSnippet"]}</div>
-        </div>
-      `).join("");
-      console.log("Renderizados posts:", items.length);
-    })
-    .catch(err => {
-      console.error(err);
-      cont.innerHTML = "<p>Error al cargar posts :(</p>";
-    });
-  */
-});
-</script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cont = document.querySelector(".lista_libros");
+            fetch("https://rikamichie.onrender.com/feed")
+                .then(r => r.json())
+                .then(feed => {
+                    cont.innerHTML = feed.items.slice(0, 5).map(post => `
+          <div class="post">
+            <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
+            <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
+            <div>${post["content:encodedSnippet"]}</div>
+          </div>
+        `).join("");
+                })
+                .catch(err => {
+                    console.error(err);
+                    cont.innerHTML = "<p>Error al cargar posts :(</p>";
+                });
+        });
+    </script>
 
 </body>
