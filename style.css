@@ -191,12 +191,12 @@ h2 {
   top: 10dvh;
   left: 10dvw;
   padding-right: 20px;
-  gap: 1dvw;
+  gap: 1dvh;
 }
 
 .izq_2 {
   position: fixed;
-  bottom: 0.5dvh;
+  bottom: 0dvh;
   overflow-x: scroll;
   width: 100vw;
 }
@@ -205,7 +205,6 @@ h2 {
   position: absolute;
   left: 10dvw;
   bottom: 10dvh;
-  padding-right: 10dvw;
 }
 
 
@@ -227,6 +226,7 @@ h2 {
   height: 40dvh;
   gap: 1dvw;
   overflow-y: auto; /* scroll vertical */
+  overflow-x: clip; /* scroll vertical */
   width: 80dvw;
 }
 
@@ -263,10 +263,6 @@ h2 {
   height: auto !important;
   display: block;
   aspect-ratio: 16 / 9;
-  border-radius: 1em;
-  margin: 1.5em 0;
-  box-shadow: 0 0 12px #0007;
-  background: #000;
 }
 
 /*ABAJO*/
