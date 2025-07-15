@@ -11,29 +11,24 @@
         </div>
     </div>
 
-<script>
-    fetch("https://rikamichie.onrender.com/feed")
-        .then(r => {
-            if (!r.ok) throw new Error("Error al obtener feed: " + r.status);
-            return r.json();
-        })
-        .then(feed => {
-            console.log("Feed recibido:", feed);
-            const items = feed.items.slice(0, 5); // ✅ ya sabemos que sí existen
-
-            const cont = document.querySelector(".lista_libros");
-            cont.innerHTML = items.map(post => `
-                <div class="post">
-                    <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
-                    <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
-                    <p>${post["content:encodedSnippet"]}</p>
-                </div>
-            `).join("");
-        })
-        .catch(err => {
-            console.error("Error cargando feed:", err);
-            document.querySelector(".lista_libros").innerHTML = "<p>Error al cargar los posts :(</p>";
-        });
-</script>
+    <script>
+        fetch("https://rikamichie.onrender.com/feed")
+            .then(r => r.json())
+            .then(feed => {
+                const items = feed.items.slice(0, 5);
+                const cont = document.querySelector(".lista_libros");
+                cont.innerHTML = items.map(post => `
+      <div class="post">
+        <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
+        <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
+        <div>${post["content:encodedSnippet"]}</div>
+      </div>
+    `).join("");
+            })
+            .catch(err => {
+                console.error(err);
+                document.querySelector(".lista_libros").innerHTML = `<p>Error al cargar posts :(</p>`;
+            });
+    </script>
 
 </body>
