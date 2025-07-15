@@ -1,24 +1,26 @@
-name: 📡 Actualizar RSS -> JSON
+# .github/workflows/update_feed_html.yml
+name: Actualizar feed HTML
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 4 * * *'  # cada noche a las 4:00 UTC
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
-  fetch:
+  actualizar-feed:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: Promptly-Technologies-LLC/rss-fetch-action@v2
-        with:
-          feed_url: 'https://rikamichie.substack.com/feed'
-          file_path: 'feed.json'
-          fetch_options: '{"headers":{"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}}'
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: '🔃 Actualizar feed'
-          file_pattern: 'feed.json'
+      - name: Checkout del repo
+        uses: actions/checkout@v4
+
+      - name: Descargar feed HTML desde Render
+        run: |
+          curl -s https://rikamichie.onrender.com/feed > paginas/feed.html
+
+      - name: Commit y push si hay cambios
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add paginas/feed.html
+          git diff --cached --quiet || git commit -m "Actualizar feed diario"
+          git push
