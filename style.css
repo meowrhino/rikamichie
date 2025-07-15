@@ -203,6 +203,45 @@ h2 {
   height: 40dvh;
   gap: 1dvw;
   overflow-y: auto; /* scroll vertical */
+  width: 80dvw;
+}
+
+.lista_libros br {
+  display: block;
+  content: "";
+  margin-top: 1em;  /* O el espacio que quieras */
+}
+
+.indice_libros ul {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  padding: 0.5em 0;
+  margin: 0;
+  list-style: none;
+  gap: 1.2em; /* Separación entre items */
+  scrollbar-width: thin; /* Para Firefox */
+}
+
+.indice_libros li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.indice_libros a {
+  display: block;
+  padding: 0.5em 1em;
+  border-radius: 1em;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255,255,255,0.07); /* O el color que prefieras */
+  transition: background 0.2s;
+  font-size: 1em;
+}
+.indice_libros a:hover {
+  background: rgba(255,255,255,0.17);
 }
 
 /*ABAJO*/

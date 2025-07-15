@@ -86,14 +86,14 @@ function cargarContenido(wrapper, archivo) {
               cont.innerHTML = items
                 .map(
                   (post, i) => `
-            <div class="post" id="post-${i}">
-              <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
-              <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
-              <div>${htmlConParrafos(
-                post["content:encodedSnippet"] || ""
-              )}</div>
-            </div>
-          `
+      <div class="post" id="post-${i}">
+        <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
+        <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
+        <div>${htmlConParrafosYTitulos(
+          post["content:encodedSnippet"] || ""
+        )}</div>
+      </div>
+    `
                 )
                 .join("");
 
@@ -143,12 +143,36 @@ function cargarContenido(wrapper, archivo) {
     });
 }
 
-// ...fuera de la función cargarContenido, añade esta utilidad:
+// ...fuera de la función cargarContenido, añade esta utilidad: (obsolete)
+/*
 function htmlConParrafos(texto) {
   if (/<p>/i.test(texto)) return texto;
   return texto
     .split(/\n{2,}/)
     .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+    .join("");
+}
+    */
+
+function htmlConParrafosYTitulos(texto) {
+  // Si ya hay <p> devolvemos tal cual
+  if (/<p>/i.test(texto)) return texto;
+
+  // Buscamos líneas que sean títulos, ej: palabras que empiezan mayúscula y el resto minúscula, seguidas de \n
+  return texto
+    .split(/\n{2,}/)
+    .map((p) => {
+      // Si la línea tiene pinta de título, la convertimos a h4
+      const tituloRegex = /^[A-ZÁÉÍÓÚÜ][\w\s-]+$/;
+      let lineas = p.split("\n").map((linea) => {
+        if (tituloRegex.test(linea.trim())) {
+          return `<h4>${linea.trim()}</h4>`;
+        } else {
+          return linea.trim();
+        }
+      });
+      return `<p>${lineas.join("<br>")}</p>`;
+    })
     .join("");
 }
 
