@@ -21,6 +21,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add paginas/feed.html
+          git add feed.html
           git diff --cached --quiet || git commit -m "Actualizar feed diario"
           git push
