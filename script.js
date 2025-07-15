@@ -162,10 +162,6 @@ function htmlConParrafos(texto) {
 }
     */
 
-function limpiarSubstackExtras(html) {
-  return html.replace(/<p>Thanks for reading![\s\S]*?<\/form><\/p>/gi, "");
-}
-
 function htmlConParrafosYTitulos(texto) {
   // Si ya hay <p> devolvemos tal cual
   if (/<p>/i.test(texto)) return texto;
