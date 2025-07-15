@@ -1,5 +1,5 @@
 # .github/workflows/update_feed_html.yml
-name: Actualizar feed HTML
+name: Actualizar feed JSON
 
 on:
   schedule:
