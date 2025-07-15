@@ -59,10 +59,13 @@ function cargarContenido(wrapper, archivo) {
     })
     .then((html) => {
       wrapper.innerHTML = html;
-      
+
       // Inyectar el feed de Substack si es la celda de la izquierda
       if (archivo.endsWith("izquierda.html")) {
         const cont = wrapper.querySelector(".lista_libros");
+        const contIndice = wrapper
+          .closest(".celda")
+          ?.parentElement.querySelector(".izq_2 .indice_libros");
         if (cont) {
           cont.innerHTML = "<p>⏳ Cargando posts...</p>";
           fetch("https://rikamichie.onrender.com/feed")
@@ -78,19 +81,34 @@ function cargarContenido(wrapper, archivo) {
                 return;
               }
               const items = feed.items.slice(0, 5);
+
+              // Render posts respetando párrafos
               cont.innerHTML = items
                 .map(
-                  (post) => `
-                <div class="post">
-                  <h3><a href="${post.link}" target="_blank">${
-                    post.title
-                  }</a></h3>
-                  <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
-                  <div>${post["content:encodedSnippet"] || ""}</div>
-                </div>
-              `
+                  (post, i) => `
+            <div class="post" id="post-${i}">
+              <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
+              <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
+              <div>${htmlConParrafos(
+                post["content:encodedSnippet"] || ""
+              )}</div>
+            </div>
+          `
                 )
                 .join("");
+
+              // Genera índice de anchors en .izq_2 si existe
+              if (contIndice) {
+                contIndice.innerHTML = `
+            <ul>
+              ${items
+                .map(
+                  (post, i) => `<li><a href="#post-${i}">${post.title}</a></li>`
+                )
+                .join("")}
+            </ul>
+          `;
+              }
             })
             .catch((err) => {
               console.error("Error al cargar feed:", err);
@@ -118,12 +136,20 @@ function cargarContenido(wrapper, archivo) {
           })
           .catch((err) => console.error("Error al cargar arriba.js:", err));
       }
-
     })
     .catch((err) => {
       wrapper.innerHTML = `<p>No pude cargar ${archivo}</p>`;
       console.error(err);
     });
+}
+
+// ...fuera de la función cargarContenido, añade esta utilidad:
+function htmlConParrafos(texto) {
+  if (/<p>/i.test(texto)) return texto;
+  return texto
+    .split(/\n{2,}/)
+    .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+    .join("");
 }
 
 function actualizarVista() {
