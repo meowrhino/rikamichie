@@ -11,25 +11,4 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const cont = document.querySelector(".lista_libros");
-            fetch("https://rikamichie.onrender.com/feed")
-                .then(r => r.json())
-                .then(feed => {
-                    cont.innerHTML = feed.items.slice(0, 5).map(post => `
-          <div class="post">
-            <h3><a href="${post.link}" target="_blank">${post.title}</a></h3>
-            <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
-            <div>${post["content:encodedSnippet"]}</div>
-          </div>
-        `).join("");
-                })
-                .catch(err => {
-                    console.error(err);
-                    cont.innerHTML = "<p>Error al cargar posts :(</p>";
-                });
-        });
-    </script>
-
 </body>

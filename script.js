@@ -59,6 +59,45 @@ function cargarContenido(wrapper, archivo) {
     })
     .then((html) => {
       wrapper.innerHTML = html;
+      
+      // Inyectar el feed de Substack si es la celda de la izquierda
+      if (archivo.endsWith("izquierda.html")) {
+        const cont = wrapper.querySelector(".lista_libros");
+        if (cont) {
+          cont.innerHTML = "<p>⏳ Cargando posts...</p>";
+          fetch("https://rikamichie.onrender.com/feed")
+            .then((r) => {
+              console.log("Fetch lanzado, status:", r.status);
+              if (!r.ok)
+                throw new Error("Respuesta de red incorrecta: " + r.status);
+              return r.json();
+            })
+            .then((feed) => {
+              if (!feed || !feed.items) {
+                cont.innerHTML = "<p>No hay posts para mostrar.</p>";
+                return;
+              }
+              const items = feed.items.slice(0, 5);
+              cont.innerHTML = items
+                .map(
+                  (post) => `
+                <div class="post">
+                  <h3><a href="${post.link}" target="_blank">${
+                    post.title
+                  }</a></h3>
+                  <p><em>${new Date(post.pubDate).toLocaleDateString()}</em></p>
+                  <div>${post["content:encodedSnippet"] || ""}</div>
+                </div>
+              `
+                )
+                .join("");
+            })
+            .catch((err) => {
+              console.error("Error al cargar feed:", err);
+              cont.innerHTML = "<p>Error al cargar posts :(</p>";
+            });
+        }
+      }
 
       if (archivo.endsWith("abajo.html")) {
         setTimeout(() => {
@@ -79,6 +118,7 @@ function cargarContenido(wrapper, archivo) {
           })
           .catch((err) => console.error("Error al cargar arriba.js:", err));
       }
+
     })
     .catch((err) => {
       wrapper.innerHTML = `<p>No pude cargar ${archivo}</p>`;
