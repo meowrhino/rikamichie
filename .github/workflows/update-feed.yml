@@ -1,5 +1,5 @@
 # .github/workflows/update_feed_html.yml
-name: Actualizar feed JSON
+name: Actualizar feed JSON domingo a las 12 UTC
 
 on:
   schedule:
