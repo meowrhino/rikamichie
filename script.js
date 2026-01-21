@@ -1,7 +1,16 @@
+// ============================================
+// SCRIPT PRINCIPAL - Sistema de Grid Navegable
+// ============================================
+
 // Referencia al contenedor principal
 const app = document.getElementById("content");
 
+// ============================================
+// CONFIGURACIÓN DEL GRID
+// ============================================
+
 // Definimos la cuadrícula (1 = pantalla activa, 0 = hueco)
+// Puedes cambiar esta estructura para crear diferentes layouts
 const grid = [
   [0, 1, 0],
   [1, 1, 1],
@@ -10,6 +19,7 @@ const grid = [
 ];
 
 // Mapa de coordenadas → nombre de archivo (sin extensión)
+// Cada celda activa (1) puede tener un nombre especial
 const nombresEspeciales = {
   "0_1": "arriba",
   "1_0": "izquierda",
@@ -19,158 +29,32 @@ const nombresEspeciales = {
   "3_1": "abajo_abajo",
 };
 
-// Posición inicial
+// Posición inicial del usuario en el grid
 let posY = 1;
 let posX = 1;
 
-// === FUNCIONES ===
+// ============================================
+// FUNCIONES AUXILIARES
+// ============================================
 
+/**
+ * Limpia el contenido extra de Substack (suscripciones, etc.)
+ */
 function limpiarSubstackExtras(html) {
   return html.replace(/<p>Thanks for reading![\s\S]*?<\/form><\/p>/gi, "");
 }
 
-function crearPantallas() {
-  for (let y = 0; y < grid.length; y++) {
-    for (let x = 0; x < grid[y].length; x++) {
-      if (grid[y][x] === 1) {
-        const celda = document.createElement("div");
-        celda.classList.add("celda", `pos_${y}_${x}`);
-        celda.dataset.y = y;
-        celda.dataset.x = x;
-
-        const wrapper = document.createElement("div");
-        wrapper.classList.add("contenido");
-        celda.appendChild(wrapper);
-        app.appendChild(celda);
-
-        const clave = `${y}_${x}`;
-        const nombre = nombresEspeciales[clave];
-        const enlace = `paginas/${nombre}.html`;
-        if (nombre) {
-          celda.classList.add(nombre);
-          cargarContenido(wrapper, enlace);
-        }
-      }
-    }
-  }
-}
-
-function cargarContenido(wrapper, archivo) {
-  fetch(archivo)
-    .then((response) => {
-      if (!response.ok) throw new Error("Error HTTP: " + response.status);
-      return response.text();
-    })
-    .then((html) => {
-      wrapper.innerHTML = html;
-
-      // Inyectar el feed de Substack si es la celda de la izquierda
-      if (archivo.endsWith("izquierda.html")) {
-        const cont = wrapper.querySelector(".lista_libros");
-        const contIndice = wrapper
-          .closest(".celda")
-          ?.parentElement.querySelector(".izq_2 .indice_libros");
-        if (cont) {
-          cont.innerHTML = '<div class="spinner"></div>';
-          fetch("feed.json")
-            .then((r) => {
-              console.log("Fetch lanzado, status:", r.status);
-              if (!r.ok)
-                throw new Error("Respuesta de red incorrecta: " + r.status);
-              return r.json();
-            })
-            .then((feed) => {
-              if (!feed || !feed.items) {
-                cont.innerHTML = "<p>No hay posts para mostrar.</p>";
-                return;
-              }
-              const items = feed.items;
-
-              // Render posts respetando párrafos
-              cont.innerHTML = items
-                .map(
-                  (post, i) => `
-      <div class="post" id="post-${i}">
-        <h2><a href="${post.link}" target="_blank">${post.title}</a></h2>
-        <p><em class="post_date">${new Date(
-          post.pubDate
-        ).toLocaleDateString()}</em></p>
-<div class="post_content">
-  ${limpiarSubstackExtras(
-    post["content:encoded"] || post["content:encodedSnippet"] || ""
-  )}
-</div>
-      </div>
-    `
-                )
-                .join("");
-
-              // Genera índice de anchors en .izq_2 si existe
-              if (contIndice) {
-                contIndice.innerHTML = `
-            <ul>
-              ${items
-                .map(
-                  (post, i) => `<li><a href="#post-${i}">${post.title}</a></li>`
-                )
-                .join("")}
-            </ul>
-          `;
-              }
-            })
-            .catch((err) => {
-              console.error("Error al cargar feed:", err);
-              cont.innerHTML = "<p>Error al cargar posts :(</p>";
-            });
-        }
-      }
-
-      if (archivo.endsWith("abajo.html")) {
-        setTimeout(() => {
-          initCarousel();
-          console.log("initCarousel lanzado desde abajo.html");
-          actualizarVista(); // 🔥 fuerza a generar botones otra vez
-        }, 50); // con un poco de delay para asegurarse
-      }
-
-      if (archivo.endsWith("arriba.html")) {
-        import("./script/arriba.js")
-          .then((mod) => {
-            setTimeout(() => {
-              mod.generarVistaArriba();
-              console.log("generarVistaArriba lanzado desde arriba.html");
-              actualizarVista();
-            }, 50);
-          })
-          .catch((err) => console.error("Error al cargar arriba.js:", err));
-      }
-    })
-    .catch((err) => {
-      wrapper.innerHTML = `<p>No pude cargar ${archivo}</p>`;
-      console.error(err);
-    });
-}
-
-// ...fuera de la función cargarContenido, añade esta utilidad: (obsolete)
-/*
-function htmlConParrafos(texto) {
-  if (/<p>/i.test(texto)) return texto;
-  return texto
-    .split(/\n{2,}/)
-    .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
-    .join("");
-}
-    */
-
+/**
+ * Convierte texto plano en HTML con párrafos y títulos
+ */
 function htmlConParrafosYTitulos(texto) {
   // Si ya hay <p> devolvemos tal cual
   if (/<p>/i.test(texto)) return texto;
 
-  // Buscamos líneas que sean títulos, ej: palabras que empiezan mayúscula y el resto minúscula, seguidas de \n
+  // Buscamos líneas que sean títulos
   return texto
     .split(/\n{2,}/)
     .map((p) => {
-      // Si la línea tiene pinta de título, la convertimos a h4
       const tituloRegex = /^[A-ZÁÉÍÓÚÜ][\w\s-]+$/;
       let lineas = p.split("\n").map((linea) => {
         if (tituloRegex.test(linea.trim())) {
@@ -184,61 +68,236 @@ function htmlConParrafosYTitulos(texto) {
     .join("");
 }
 
-function actualizarVista() {
-  let todas = document.querySelectorAll(".celda");
-  for (let i = 0; i < todas.length; i++) {
-    todas[i].classList.remove("activa");
+// ============================================
+// SISTEMA DE GRID
+// ============================================
+
+/**
+ * Crea todas las pantallas del grid según la configuración
+ */
+function crearPantallas() {
+  for (let y = 0; y < grid.length; y++) {
+    for (let x = 0; x < grid[y].length; x++) {
+      if (grid[y][x] === 1) {
+        // Crear celda
+        const celda = document.createElement("div");
+        celda.classList.add("celda", `pos_${y}_${x}`);
+        celda.dataset.y = y;
+        celda.dataset.x = x;
+
+        // Crear wrapper para contenido
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("contenido");
+        celda.appendChild(wrapper);
+        app.appendChild(celda);
+
+        // Cargar contenido si tiene nombre especial
+        const clave = `${y}_${x}`;
+        const nombre = nombresEspeciales[clave];
+        if (nombre) {
+          celda.classList.add(nombre);
+          cargarContenido(wrapper, `paginas/${nombre}.html`);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Carga el contenido HTML de una celda y ejecuta scripts específicos
+ */
+function cargarContenido(wrapper, archivo) {
+  fetch(archivo)
+    .then((response) => {
+      if (!response.ok) throw new Error("Error HTTP: " + response.status);
+      return response.text();
+    })
+    .then((html) => {
+      wrapper.innerHTML = html;
+
+      // Ejecutar inicializaciones específicas por sección
+      inicializarSeccion(archivo, wrapper);
+    })
+    .catch((err) => {
+      wrapper.innerHTML = `<p>No pude cargar ${archivo}</p>`;
+      console.error(err);
+    });
+}
+
+/**
+ * Inicializa scripts específicos según la sección cargada
+ */
+function inicializarSeccion(archivo, wrapper) {
+  // SECCIÓN IZQUIERDA: Feed de Substack + texto introductorio
+  if (archivo.endsWith("izquierda.html")) {
+    import("./script/izquierda.js")
+      .then((mod) => {
+        setTimeout(() => {
+          mod.generarVistaIzquierda();
+        }, 50);
+      })
+      .catch((err) => console.error("Error al cargar izquierda.js:", err));
+
+    const cont = wrapper.querySelector(".lista_libros");
+    const contIndice = wrapper
+      .closest(".celda")
+      ?.parentElement.querySelector(".izq_2 .indice_libros");
+
+    if (cont) {
+      cont.innerHTML = '<div class="spinner"></div>';
+      fetch("feed.json")
+        .then((r) => {
+          if (!r.ok) throw new Error("Respuesta de red incorrecta: " + r.status);
+          return r.json();
+        })
+        .then((feed) => {
+          if (!feed || !feed.items) {
+            cont.innerHTML = "<p>No hay posts para mostrar.</p>";
+            return;
+          }
+          const items = feed.items;
+
+          // Renderizar posts
+          cont.innerHTML = items
+            .map(
+              (post, i) => `
+            <div class="post" id="post-${i}">
+              <h2><a href="${post.link}" target="_blank">${post.title}</a></h2>
+              <p><em class="post_date">${new Date(post.pubDate).toLocaleDateString()}</em></p>
+              <div class="post_content">
+                ${limpiarSubstackExtras(post["content:encoded"] || post["content:encodedSnippet"] || "")}
+              </div>
+            </div>
+          `
+            )
+            .join("");
+
+          // Generar índice de anchors
+          if (contIndice) {
+            contIndice.innerHTML = `
+              <ul>
+                ${items.map((post, i) => `<li><a href="#post-${i}">${post.title}</a></li>`).join("")}
+              </ul>
+            `;
+          }
+        })
+        .catch((err) => {
+          console.error("Error al cargar feed:", err);
+          cont.innerHTML = "<p>Error al cargar posts :(</p>";
+        });
+    }
   }
 
-  let selector = ".pos_" + posY + "_" + posX;
-  let activa = document.querySelector(selector);
+  // SECCIÓN ABAJO: Carrusel de discos
+  if (archivo.endsWith("abajo.html")) {
+    import("./script/carrusel.js")
+      .then((mod) => {
+        setTimeout(() => {
+          mod.initCarousel();
+          actualizarVista();
+        }, 50);
+      })
+      .catch((err) => console.error("Error al cargar carrusel.js:", err));
+  }
+
+  // SECCIÓN ARRIBA: Timeline de eventos
+  if (archivo.endsWith("arriba.html")) {
+    import("./script/arriba.js")
+      .then((mod) => {
+        setTimeout(() => {
+          mod.generarVistaArriba();
+          actualizarVista();
+        }, 50);
+      })
+      .catch((err) => console.error("Error al cargar arriba.js:", err));
+  }
+
+  // SECCIÓN DERECHA: Información de servicios
+  if (archivo.endsWith("derecha.html")) {
+    import("./script/derecha.js")
+      .then((mod) => {
+        setTimeout(() => {
+          mod.generarVistaDerecha();
+          actualizarVista();
+        }, 50);
+      })
+      .catch((err) => console.error("Error al cargar derecha.js:", err));
+  }
+}
+
+// ============================================
+// SISTEMA DE NAVEGACIÓN
+// ============================================
+
+/**
+ * Actualiza la vista mostrando solo la celda activa
+ */
+function actualizarVista() {
+  // Ocultar todas las celdas
+  const todas = document.querySelectorAll(".celda");
+  todas.forEach(celda => celda.classList.remove("activa"));
+
+  // Mostrar celda activa
+  const selector = `.pos_${posY}_${posX}`;
+  const activa = document.querySelector(selector);
 
   if (activa) {
-    // 1. Si es la celda .abajo y aún no hay color dinámico aplicado...
-    if (activa.classList.contains("abajo") && window.discs) {
-      document
-        .querySelector('meta[name="theme-color"]')
-        .setAttribute("content", window.discs[0].bgColor); // primer disco
-    } else {
-      // 2. Para el resto: usar --theme-color del CSS como siempre
-      const themeColor = getComputedStyle(activa)
-        .getPropertyValue("--theme-color")
-        .trim();
-      document
-        .querySelector('meta[name="theme-color"]')
-        .setAttribute("content", themeColor);
-    }
-
     activa.classList.add("activa");
+
+    // Actualizar theme-color del navegador
+    actualizarThemeColor(activa);
+
+    // Crear botones de navegación
     crearBotonesNavegacion(activa);
   }
 }
 
-function crearBotonesNavegacion(celda) {
-  let viejos = celda.querySelectorAll(".boton-nav");
-  for (let i = 0; i < viejos.length; i++) {
-    viejos[i].remove();
+/**
+ * Actualiza el color del tema del navegador
+ */
+function actualizarThemeColor(celda) {
+  let themeColor;
+
+  // Si es la celda .abajo, usar el color del disco actual
+  if (celda.classList.contains("abajo") && window.discs && window.discs.length > 0) {
+    themeColor = window.discs[0].bgColor;
+  } else {
+    // Para el resto, usar --theme-color del CSS
+    themeColor = getComputedStyle(celda).getPropertyValue("--theme-color").trim();
   }
 
-  let dirs = [
+  document
+    .querySelector('meta[name="theme-color"]')
+    .setAttribute("content", themeColor);
+}
+
+/**
+ * Crea los botones de navegación según las celdas disponibles
+ */
+function crearBotonesNavegacion(celda) {
+  // Eliminar botones anteriores
+  celda.querySelectorAll(".boton-nav").forEach(btn => btn.remove());
+
+  // Direcciones posibles
+  const direcciones = [
     { dy: -1, dx: 0, clase: "btn_arriba", label: "arriba" },
     { dy: 1, dx: 0, clase: "btn_abajo", label: "abajo" },
     { dy: 0, dx: -1, clase: "btn_izquierda", label: "izquierda" },
     { dy: 0, dx: 1, clase: "btn_derecha", label: "derecha" },
   ];
 
-  for (let i = 0; i < dirs.length; i++) {
-    let d = dirs[i];
-    let nuevaY = posY + d.dy;
-    let nuevaX = posX + d.dx;
+  // Crear botones solo para direcciones válidas
+  direcciones.forEach((dir) => {
+    const nuevaY = posY + dir.dy;
+    const nuevaX = posX + dir.dx;
 
+    // Verificar si la celda destino existe y está activa
     if (grid[nuevaY] && grid[nuevaY][nuevaX] === 1) {
-      let boton = document.createElement("button");
-      boton.classList.add("boton-nav");
-      boton.classList.add(d.clase);
-      boton.textContent = d.label;
+      const boton = document.createElement("button");
+      boton.classList.add("boton-nav", dir.clase);
+      boton.textContent = dir.label;
 
-      boton.onclick = function () {
+      boton.onclick = () => {
         posY = nuevaY;
         posX = nuevaX;
         actualizarVista();
@@ -246,11 +305,12 @@ function crearBotonesNavegacion(celda) {
 
       celda.appendChild(boton);
     }
-  }
+  });
 }
 
-// === IMPORTS Y EJECUCIÓN FINAL ===
-import { initCarousel, discs } from "./script/carrusel.js";
+// ============================================
+// INICIALIZACIÓN
+// ============================================
 
 crearPantallas();
 actualizarVista();

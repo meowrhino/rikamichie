@@ -1,29 +1,5 @@
-export const discs = [
-  {
-    image: "./img/disco1.jpg",
-    caption: "cançons d'amor i de mort",
-    bgColor: "#000",
-    btnColor: "#f00",
-    link: "https://ejemplo.com/disco1",
-  },
-  {
-    image: "./img/disco2.jpg",
-    caption: "cat pop",
-    bgColor: "#00f",
-    btnColor: "#fff",
-    link: "https://ejemplo.com/disco2",
-  },
-  {
-    image: "./img/disco3.jpg",
-    caption: "sanson i dalila",
-    bgColor: "#f0f",
-    btnColor: "#fff",
-    link: "https://ejemplo.com/disco3",
-  },
-];
-
-window.discs = discs; 
-
+// Carrusel de discos - Carga configuración desde data.json
+let discs = [];
 let currentIndex = 0;
 let imgEl;
 let captionEl;
@@ -34,22 +10,55 @@ let nextBtn;
 let listenersInitialized = false;
 let observerInitialized = false;
 
-export function initCarousel() {
+/**
+ * Carga los datos del carrusel desde data.json
+ */
+async function loadCarouselData() {
+  try {
+    const response = await fetch('./data.json');
+    if (!response.ok) throw new Error('Error al cargar data.json');
+    const data = await response.json();
+    discs = data.abajo.discos;
+    window.discs = discs; // Mantener compatibilidad
+    return discs;
+  } catch (error) {
+    console.error('Error cargando datos del carrusel:', error);
+    return [];
+  }
+}
+
+/**
+ * Inicializa el carrusel
+ */
+export async function initCarousel() {
+  // Cargar datos si aún no están disponibles
+  if (discs.length === 0) {
+    await loadCarouselData();
+  }
+
   // Referencias al DOM
   imgEl = document.getElementById("carousel-image");
   captionEl = document.getElementById("carousel-caption");
   prevBtn = document.getElementById("prev-btn");
   nextBtn = document.getElementById("next-btn");
 
+  // Verificar que los elementos existen
+  if (!imgEl || !captionEl || !prevBtn || !nextBtn) {
+    console.error('Elementos del carrusel no encontrados en el DOM');
+    return;
+  }
+
   // 1) Enlazar listeners (solo una vez)
   if (!listenersInitialized) {
-    // botones prev y next
+    // Botón anterior
     prevBtn.addEventListener("click", () => {
       if (currentIndex > 0) {
         currentIndex--;
         updateCarousel();
       }
     });
+
+    // Botón siguiente
     nextBtn.addEventListener("click", () => {
       if (currentIndex < discs.length - 1) {
         currentIndex++;
@@ -57,7 +66,7 @@ export function initCarousel() {
       }
     });
 
-    // NUEVO: click en la imagen para abrir link
+    // Click en la imagen para abrir link
     imgEl.addEventListener("click", () => {
       const disc = discs[currentIndex];
       if (disc.link) {
@@ -68,7 +77,7 @@ export function initCarousel() {
     listenersInitialized = true;
   }
 
-  // 2) Observer para estilizar grid-nav (.boton-nav) al crearse dinámicamente
+  // 2) Observer para estilizar botones de navegación (.boton-nav) al crearse dinámicamente
   if (!observerInitialized) {
     const celdaAbajo = document.querySelector(".celda.abajo");
     if (celdaAbajo) {
@@ -89,43 +98,50 @@ export function initCarousel() {
     observerInitialized = true;
   }
 
-  // 3) Siempre repintar vista al (re)iniciar
+  // 3) Repintar vista al (re)iniciar
   updateCarousel();
 
-  // 🌈 Aplica color inicial del primer disco al meta theme-color
+  // Aplicar color inicial del primer disco al meta theme-color
   document
     .querySelector('meta[name="theme-color"]')
     .setAttribute("content", discs[currentIndex].bgColor);
 }
 
+/**
+ * Actualiza la vista del carrusel con el disco actual
+ */
 function updateCarousel() {
   const disc = discs[currentIndex];
 
-  // Imagen y texto
+  // Actualizar imagen y texto
   imgEl.src = disc.image;
   captionEl.textContent = disc.caption;
   captionEl.style.color = disc.btnColor;
 
-  // Fondo de la celda "abajo"
+  // Actualizar fondo de la celda "abajo"
   const celdaAbajo = document.querySelector(".celda.abajo");
   if (celdaAbajo) {
     celdaAbajo.style.backgroundColor = disc.bgColor;
-    // 🌈 ACTUALIZA LA BARRA SUPERIOR EN iOS AQUÍ:
+    
+    // Actualizar la barra superior en iOS/Android
     document
       .querySelector('meta[name="theme-color"]')
       .setAttribute("content", disc.bgColor);
 
-    // Estilizar botones grid-nav existentes
+    // Estilizar botones de navegación existentes
     celdaAbajo.querySelectorAll(".boton-nav").forEach((btn) => {
       btn.style.color = disc.btnColor;
     });
   }
 
-  // Colores de los botones del carrusel
+  // Actualizar colores de los botones del carrusel
   prevBtn.style.color = disc.btnColor;
   nextBtn.style.color = disc.btnColor;
 
-  // Desactivar extremos
+  // Desactivar botones en los extremos
   prevBtn.classList.toggle("desactivado", currentIndex === 0);
   nextBtn.classList.toggle("desactivado", currentIndex === discs.length - 1);
 }
+
+// Exportar para compatibilidad
+export { discs };
