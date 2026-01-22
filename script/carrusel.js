@@ -9,6 +9,8 @@ let nextBtn;
 // Controles para inicializaciones únicas
 let listenersInitialized = false;
 let observerInitialized = false;
+let updateToken = 0;
+const SWITCH_FADE_MS = 200;
 
 /**
  * Carga los datos del carrusel desde data.json
@@ -25,6 +27,19 @@ async function loadCarouselData() {
     console.error('Error cargando datos del carrusel:', error);
     return [];
   }
+}
+
+function preloadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = src;
+  });
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -110,8 +125,18 @@ export async function initCarousel() {
 /**
  * Actualiza la vista del carrusel con el disco actual
  */
-function updateCarousel() {
+async function updateCarousel() {
   const disc = discs[currentIndex];
+  if (!disc) return;
+  const token = ++updateToken;
+  const carouselEl = imgEl?.closest(".carousel");
+
+  if (carouselEl) {
+    carouselEl.classList.add("is-switching");
+  }
+
+  await Promise.all([preloadImage(disc.image), wait(SWITCH_FADE_MS)]);
+  if (token !== updateToken) return;
 
   // Actualizar imagen y texto
   imgEl.src = disc.image;
@@ -141,6 +166,14 @@ function updateCarousel() {
   // Desactivar botones en los extremos
   prevBtn.classList.toggle("desactivado", currentIndex === 0);
   nextBtn.classList.toggle("desactivado", currentIndex === discs.length - 1);
+
+  if (carouselEl) {
+    requestAnimationFrame(() => {
+      if (token === updateToken) {
+        carouselEl.classList.remove("is-switching");
+      }
+    });
+  }
 }
 
 // Exportar para compatibilidad
