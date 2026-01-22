@@ -2,33 +2,10 @@
 // VISTA DE DERECHA - INFORMACIÓN DE MASAJES
 // ============================================
 
+import { getSeccion } from './data.js';
+
 let dataDerecha = null;
 let eventListenersAdded = false; // Flag para evitar duplicar listeners
-
-/**
- * Carga los datos de la sección derecha desde data.json
- */
-async function loadDerechaData() {
-  try {
-    const response = await fetch("./data.json");
-    if (!response.ok) {
-      throw new Error("Error al cargar data.json");
-    }
-    const data = await response.json();
-    
-    // Validación: verificar que existe la sección derecha
-    if (!data.derecha) {
-      console.error("❌ No se encontró la sección 'derecha' en data.json");
-      return null;
-    }
-    
-    dataDerecha = data.derecha;
-    return dataDerecha;
-  } catch (error) {
-    console.error("❌ Error cargando datos de la sección derecha:", error);
-    return null;
-  }
-}
 
 /**
  * Genera una tabla de precios
@@ -139,7 +116,7 @@ function configurarInteractividad() {
 export async function generarVistaDerecha() {
   // Cargar datos si aún no están disponibles
   if (!dataDerecha) {
-    await loadDerechaData();
+    dataDerecha = await getSeccion('derecha');
   }
   
   if (!dataDerecha) {

@@ -1,4 +1,7 @@
 // Carrusel de discos - Carga configuración desde data.json
+
+import { getSeccion } from './data.js';
+
 let discs = [];
 let currentIndex = 0;
 let imgEl;
@@ -13,22 +16,8 @@ let updateToken = 0;
 const SWITCH_FADE_MS = 200;
 
 /**
- * Carga los datos del carrusel desde data.json
+ * Precarga una imagen
  */
-async function loadCarouselData() {
-  try {
-    const response = await fetch('./data.json');
-    if (!response.ok) throw new Error('Error al cargar data.json');
-    const data = await response.json();
-    discs = data.abajo.discos;
-    window.discs = discs; // Mantener compatibilidad
-    return discs;
-  } catch (error) {
-    console.error('Error cargando datos del carrusel:', error);
-    return [];
-  }
-}
-
 function preloadImage(src) {
   return new Promise((resolve) => {
     const img = new Image();
@@ -38,6 +27,9 @@ function preloadImage(src) {
   });
 }
 
+/**
+ * Espera un tiempo determinado
+ */
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -48,7 +40,14 @@ function wait(ms) {
 export async function initCarousel() {
   // Cargar datos si aún no están disponibles
   if (discs.length === 0) {
-    await loadCarouselData();
+    const data = await getSeccion('abajo');
+    if (data && data.discos) {
+      discs = data.discos;
+      window.discs = discs; // Mantener compatibilidad
+    } else {
+      console.error('No se pudieron cargar los datos del carrusel');
+      return;
+    }
   }
 
   // Referencias al DOM

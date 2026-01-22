@@ -94,13 +94,6 @@
     "texto": {
       "parrafo1": "si quieres montar una editorial para esquizofrénicos yo te consigo los textos",
       "parrafo2": "enviame tu manuscrito!!! <a href=\"mailto:rikamichie@gmail.com\" target=\"_blank\" rel=\"noopener noreferrer\">rikamichie@gmail.com</a>"
-    },
-    "colores": {
-      "bgColor": "black",
-      "textColor": "Gainsboro",
-      "themeColor": "black",
-      "text2Color": "red",
-      "btnColor": "red"
     }
   }
 }
