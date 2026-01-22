@@ -94,7 +94,7 @@ h2 {
 }
 
 .btn_derecha {
-  right: 1dvw;
+  right: 1.6dvw;
   top: 50%;
   transform: translateY(-50%) rotate(90deg);
   transform-origin: center;
@@ -267,6 +267,13 @@ h2 {
   margin: 1rem 0rem;
 }
 
+.lista_libros .post_content img {
+  display: block;
+  max-width: 100%;
+  width: auto !important;
+  height: auto !important;
+}
+
 .post_date {
   font-size: 1.5rem;
   display: flex;
@@ -303,6 +310,12 @@ h2 {
   aspect-ratio: 16 / 9;
 }
 
+.post_content .image-link-expand,
+.post_content button.pencraft,
+.post_content .pencraft.icon-container {
+  display: none !important;
+}
+
 .spinner {
   width: 40px;
   height: 40px;
@@ -316,6 +329,12 @@ h2 {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .lista_libros .post_content img {
+    max-height: 35dvh;
   }
 }
 
