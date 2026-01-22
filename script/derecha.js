@@ -45,12 +45,13 @@ function generarTiposMasaje(datos) {
   
   const tipos = datos.tipos
     .map(tipo => {
-      const descripcion = tipo.descripcion 
-        ? `<span class="der_tipo_descripcion">: ${tipo.descripcion}</span>` 
+      const descripcion = tipo.descripcion
+        ? `<span class="der_tipo_descripcion">${tipo.descripcion}</span>`
         : "";
+      const nombre = tipo.descripcion ? `${tipo.nombre}:` : tipo.nombre;
       return `
         <div class="der_tipo_item">
-          <span class="der_tipo_nombre">${tipo.nombre}</span>${descripcion}
+          <span class="der_tipo_nombre">${nombre}</span>${descripcion}
         </div>
       `;
     })
@@ -74,9 +75,14 @@ function configurarInteractividad() {
     return;
   }
   
+  const bloque = contenedor.closest(".der_bloque");
+  
   // Función para expandir/contraer
   function toggleExpansion() {
     contenedor.classList.toggle("expandido");
+    if (bloque) {
+      bloque.classList.toggle("expandido");
+    }
   }
   
   // Detectar si es móvil o desktop
@@ -95,12 +101,18 @@ function configurarInteractividad() {
   contenedor.addEventListener("mouseenter", () => {
     if (!checkDevice()) {
       contenedor.classList.add("expandido");
+      if (bloque) {
+        bloque.classList.add("expandido");
+      }
     }
   });
   
   contenedor.addEventListener("mouseleave", () => {
     if (!checkDevice()) {
       contenedor.classList.remove("expandido");
+      if (bloque) {
+        bloque.classList.remove("expandido");
+      }
     }
   });
   

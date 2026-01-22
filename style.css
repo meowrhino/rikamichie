@@ -501,8 +501,8 @@ h2 {
   text-transform: lowercase;
   opacity: 0.85;
   width: 100%;
-  text-align: right;
-  align-self: flex-end;
+  text-align: left;
+  align-self: flex-start;
   transition: color 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
 }
 
@@ -561,8 +561,8 @@ h2 {
 
 /* Cuando el contenedor está expandido, mostrar tipos */
 .der_contenedor.expandido .der_tipos {
-  margin-top: 1rem;
-  padding-top: 1rem;
+  /* margin-top: 1rem;
+  padding-top: 1rem; */
   border-top: 0;
   max-height: 100dvh;
   opacity: 1;
