@@ -3,6 +3,7 @@
 // ============================================
 
 let dataDerecha = null;
+let eventListenersAdded = false; // Flag para evitar duplicar listeners
 
 /**
  * Carga los datos de la sección derecha desde data.json
@@ -82,63 +83,54 @@ function generarTiposMasaje(datos) {
 }
 
 /**
- * Configura la interactividad del contenedor
+ * Configura la interactividad del contenedor (solo se ejecuta una vez)
  */
 function configurarInteractividad() {
+  // Si ya se añadieron los listeners, no hacer nada
+  if (eventListenersAdded) {
+    return;
+  }
+  
   const contenedor = document.getElementById("contenedorMasajes");
   if (!contenedor) {
     console.warn("⚠️ No se encontró el contenedor de masajes");
     return;
   }
-  const bloque = contenedor.closest(".der_bloque");
-  if (bloque) {
-    const expandido = contenedor.classList.contains("expandido");
-    bloque.classList.toggle("expandido", expandido);
+  
+  // Función para expandir/contraer
+  function toggleExpansion() {
+    contenedor.classList.toggle("expandido");
   }
   
   // Detectar si es móvil o desktop
-  const esMobile = window.innerWidth < 768;
-  
-  if (esMobile) {
-    // Móvil: toggle con click
-    contenedor.addEventListener("click", () => {
-      const expandido = !contenedor.classList.contains("expandido");
-      contenedor.classList.toggle("expandido", expandido);
-      if (bloque) {
-        bloque.classList.toggle("expandido", expandido);
-      }
-    });
-  } else {
-    // Desktop: hover
-    contenedor.addEventListener("mouseenter", () => {
-      contenedor.classList.add("expandido");
-      if (bloque) {
-        bloque.classList.add("expandido");
-      }
-    });
-    
-    contenedor.addEventListener("mouseleave", () => {
-      contenedor.classList.remove("expandido");
-      if (bloque) {
-        bloque.classList.remove("expandido");
-      }
-    });
+  function checkDevice() {
+    return window.innerWidth < 768;
   }
-}
-
-/**
- * Reconfigura la interactividad al cambiar el tamaño de ventana
- */
-function reconfigurarInteractividad() {
-  const contenedor = document.getElementById("contenedorMasajes");
-  if (!contenedor) return;
   
-  // Limpiar eventos anteriores
-  const nuevoContenedor = contenedor.cloneNode(true);
-  contenedor.parentNode.replaceChild(nuevoContenedor, contenedor);
+  // Móvil: click para toggle
+  contenedor.addEventListener("click", (e) => {
+    if (checkDevice()) {
+      toggleExpansion();
+    }
+  });
   
-  // Reconfigurar
-  configurarInteractividad();
+  // Desktop: hover para expandir/contraer
+  contenedor.addEventListener("mouseenter", () => {
+    if (!checkDevice()) {
+      contenedor.classList.add("expandido");
+    }
+  });
+  
+  contenedor.addEventListener("mouseleave", () => {
+    if (!checkDevice()) {
+      contenedor.classList.remove("expandido");
+    }
+  });
+  
+  // Marcar que ya se añadieron los listeners
+  eventListenersAdded = true;
+  
+  console.log("✅ Interactividad configurada");
 }
 
 /**
@@ -190,15 +182,10 @@ export async function generarVistaDerecha() {
     console.warn("⚠️ No se pudieron generar los tipos de masaje");
   }
   
-  // Configurar interactividad
+  // Configurar interactividad (solo una vez)
   configurarInteractividad();
   
-  // Reconfigurar al cambiar tamaño de ventana
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(reconfigurarInteractividad, 250);
-  });
+  console.log("✅ Vista de derecha generada");
 }
 
 // Exportar para compatibilidad
