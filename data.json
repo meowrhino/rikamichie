@@ -198,6 +198,9 @@
       }
     ]
   },
+
+
+
   "abajo": {
     "discos": [
       {
@@ -223,9 +226,12 @@
       }
     ]
   },
+
+
+
   "derecha": {
     "imagen": {
-      "url": "img/derecha.jpg",
+      "url": "img/derecha_2.webp",
       "alt": "Imagen de fondo"
     },
     "colores": {
@@ -244,9 +250,12 @@
         "relajante",
         "deportivo"
       ],
-      "precio": "44€/h"
+      "precio": "55€/h"
     }
   },
+
+
+
   "izquierda": {
     "texto": {
       "parrafo1": "si quieres montar una editorial para esquizofrénicos yo te consigo los textos",
