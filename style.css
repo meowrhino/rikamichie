@@ -149,12 +149,12 @@ h2 {
 
 .animate-e {
   /* Duración 5s, va y vuelve (alternate), y se repite infinitamente */
-  animation: colorFade 5s infinite alternate ease-in-out;
+  animation: colorFade 5s infinite alternate cubic-bezier(0.9, 0, 0.1, 1);
 }
 
 .animate-e_inv {
   /* Misma animación, pero en fase invertida */
-  animation: colorFade 5s infinite alternate-reverse ease-in-out;
+  animation: colorFade 5s infinite alternate-reverse cubic-bezier(0.9, 0, 0.1, 1);
 }
 
 @keyframes colorFade {
@@ -383,6 +383,7 @@ h2 {
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Contenedor crimson */
@@ -431,10 +432,10 @@ h2 {
 /* Título principal */
 .der_titulo {
   margin: 0;
-  font-size: 2.5rem;
-  font-weight: normal;
+  font-size: 3rem;
+  font-weight: 700;
   text-align: left;
-  letter-spacing: 0.05em;
+
   line-height: 1;
 }
 
@@ -462,16 +463,16 @@ h2 {
   font-size: 0.95rem;
   text-transform: lowercase;
   opacity: 0.85;
-  max-height: 2rem;
-  transition: opacity 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
+  width: 100%;
+  text-align: right;
+  align-self: flex-end;
+  transition: color 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
 }
 
 .der_contenedor.expandido .der_ver_tipos {
-  opacity: 0;
-  max-height: 0;
-  margin-top: 0;
-  overflow: hidden;
-  pointer-events: none;
+  color: crimson;
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 /* Cada tabla de precios */
@@ -598,10 +599,15 @@ h2 {
     bottom: 0;
     left: auto;
     top: auto;
+    transform: translateX(10dvw);
+  }
+
+  .der_bloque.expandido {
+    transform: translateX(0);
   }
   
   .der_contenedor {
-    width: calc(75dvw - 3rem);
+    width: calc(70dvw - 3rem);
     max-width: none;
   }
   
@@ -611,7 +617,7 @@ h2 {
   }
   
   .der_titulo {
-    font-size: 2rem;
+    font-size: 2.3rem;
     margin-bottom: 0;
   }
   
@@ -635,12 +641,12 @@ h2 {
 /* RESPONSIVE: MÓVIL PEQUEÑO */
 @media (max-width: 480px) {
   .der_contenedor {
-    width: calc(80dvw - 2rem);
+    width: calc(70dvw - 2rem);
     padding: 1rem 1.5rem;
   }
   
   .der_titulo {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 }
 

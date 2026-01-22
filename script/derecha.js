@@ -90,6 +90,11 @@ function configurarInteractividad() {
     console.warn("⚠️ No se encontró el contenedor de masajes");
     return;
   }
+  const bloque = contenedor.closest(".der_bloque");
+  if (bloque) {
+    const expandido = contenedor.classList.contains("expandido");
+    bloque.classList.toggle("expandido", expandido);
+  }
   
   // Detectar si es móvil o desktop
   const esMobile = window.innerWidth < 768;
@@ -97,16 +102,26 @@ function configurarInteractividad() {
   if (esMobile) {
     // Móvil: toggle con click
     contenedor.addEventListener("click", () => {
-      contenedor.classList.toggle("expandido");
+      const expandido = !contenedor.classList.contains("expandido");
+      contenedor.classList.toggle("expandido", expandido);
+      if (bloque) {
+        bloque.classList.toggle("expandido", expandido);
+      }
     });
   } else {
     // Desktop: hover
     contenedor.addEventListener("mouseenter", () => {
       contenedor.classList.add("expandido");
+      if (bloque) {
+        bloque.classList.add("expandido");
+      }
     });
     
     contenedor.addEventListener("mouseleave", () => {
       contenedor.classList.remove("expandido");
+      if (bloque) {
+        bloque.classList.remove("expandido");
+      }
     });
   }
 }
