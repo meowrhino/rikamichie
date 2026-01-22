@@ -149,12 +149,14 @@ h2 {
 
 .animate-e {
   /* Duración 5s, va y vuelve (alternate), y se repite infinitamente */
-  animation: colorFade 5s infinite alternate cubic-bezier(0.9, 0, 0.1, 1);
+  animation: colorFade 5s infinite alternate linear;
+  will-change: color;
 }
 
 .animate-e_inv {
   /* Misma animación, pero en fase invertida */
-  animation: colorFade 5s infinite alternate-reverse cubic-bezier(0.9, 0, 0.1, 1);
+  animation: colorFade 5s infinite alternate-reverse linear;
+  will-change: color;
 }
 
 @keyframes colorFade {
