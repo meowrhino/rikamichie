@@ -173,7 +173,7 @@ h2 {
 .izquierda h4 {
   color: var(--text2-color);
   font-weight: 300;
-  margin: none;
+  margin: 0;
 }
 
 .izquierda h2 {
@@ -197,7 +197,7 @@ h2 {
   position: fixed;
   bottom: 2.5dvh;
   overflow-x: scroll;
-  width: 100vw;
+  width: 100dvw;
 }
 
 .izq_3 {
@@ -237,7 +237,7 @@ h2 {
 .post_date {
   font-size: 1.5rem;
   display: flex;
-  align-items: right;
+  align-items: flex-end;
 }
 
 .indice_libros ul {
@@ -311,7 +311,7 @@ h2 {
   transform: scale(1.03);
 }
 
-.buttons span {
+.buttons button {
   font-family: inherit;
   font-size: clamp(1.5rem, 5dvw, 3rem);
   background: none;
@@ -321,7 +321,7 @@ h2 {
   transition: opacity 0.2s ease;
 }
 
-.buttons span.desactivado {
+.buttons button.desactivado {
   opacity: 0.25;
   cursor: default;
   pointer-events: none;
@@ -336,132 +336,280 @@ h2 {
   --btn-color: crimson;
 }
 
-.der_1_layout {
+/* Layout principal */
+.der_layout {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Imagen de fondo */
+.der_imagen {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Contenedor crimson */
+.der_contenedor {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  right: 2dvw;
+  bottom: 2dvh;
+  background-color: crimson;
+  color: white;
+  padding: 1.5rem 2rem;
+  font-family: serif;
+  
+  /* Transición muy suave */
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Estado inicial: cerrado */
+  max-height: 35dvh;
+  overflow: hidden;
+  
+  /* Sombra sutil */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  
+  /* Esquinas redondeadas suaves */
+  border-radius: 8px;
+}
+
+/* Estado expandido */
+.der_contenedor.expandido {
+  max-height: 75dvh;
+  overflow-y: auto;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Scrollbar personalizada */
+.der_contenedor::-webkit-scrollbar {
+  width: 6px;
+}
+
+.der_contenedor::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.der_contenedor::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.der_contenedor::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Título principal */
+.der_titulo {
+  margin: 0 0 1.5rem 0;
+  font-size: 2.5rem;
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.der_titulo a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.der_titulo a:hover {
+  opacity: 0.8;
+}
+
+/* Contenedor de tablas de precios */
+.der_precios {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-direction: row;
+}
+
+/* Cada tabla de precios */
+.der_tabla_precios {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Título de cada tabla */
+.der_tabla_titulo {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: lowercase;
+  opacity: 0.95;
+}
+
+/* Items de precios */
+.der_tabla_items {
   display: flex;
   flex-direction: column;
-  width: 100dvw;
-  height: 100dvh;
-  z-index: 1;
-  /* Si lo quieres en una celda .derecha, usa height: 100% y quita absolute */
+  gap: 0.6rem;
 }
 
-.der_1_img {
-  flex: 2 1 0;
-  width: 100%;
-  min-height: 0;
-  min-width: 0;
-  background-image: url("img/derecha.jpg");
-  background-size: cover; /* que cubra el área aunque recorte */
-  background-position: center; /* siempre centrada */
-  background-repeat: no-repeat;
-  /* opcional: transición suave si cambias de imagen */
-  transition: background-image 0.6s;
-  position: relative;
-}
-
-.der_1_texto {
+/* Cada fila de precio */
+.der_precio_item {
   display: flex;
-  align-items: baseline;
-  justify-content: center;
-
-  padding: 1.5rem;
-
-  font-size: clamp(5rem, 3dvw, 10rem);
-  color: white;
-  background: crimson; /* o tu var(--btn-color) si prefieres */
-}
-
-.der_tipos {
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: 0.5rem;
+  font-size: 1rem;
+  padding: 0.3rem 0;
 }
 
-.der_1_img span {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
+/* Separador entre duración y precio */
+.der_precio_item::after {
+  content: '';
+  flex: 1;
+  margin: 0 0.5rem;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+  min-width: 10px;
+}
 
-  position: absolute;
-  bottom: 2dvh;
+.der_precio_duracion {
+  white-space: nowrap;
+}
 
-  left: 50%;
-  transform: translateX(-50%);
+.der_precio_valor {
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Sección de tipos de masaje */
+.der_tipos {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  
+  /* Animación de aparición suave */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Cuando el contenedor está expandido, mostrar tipos */
+.der_contenedor.expandido .der_tipos {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Título de tipos */
+.der_tipos_titulo {
+  margin: 0 0 1rem 0;
   font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: lowercase;
 }
 
-.der_tipos p:hover {
-  scale: 1.2;
+/* Lista de tipos */
+.der_tipos_lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
-.der_tipos p:nth-child(1):hover {
-  animation: stretchY 0.4s ease infinite;
+/* Cada tipo de masaje */
+.der_tipo_item {
+  line-height: 1.5;
+  font-size: 0.95rem;
 }
 
-@keyframes stretchY {
-  0% {
-    transform: scaleY(1);
-  }
-  50% {
-    transform: scaleY(1.3);
-  }
-  100% {
-    transform: scaleY(1);
-  }
+.der_tipo_nombre {
+  font-weight: bold;
+  text-transform: lowercase;
 }
 
-.der_tipos p:nth-child(2):hover {
-  animation: sway 0.6s ease infinite;
+.der_tipo_descripcion {
+  opacity: 0.9;
+  margin-left: 0.3rem;
 }
 
-@keyframes sway {
-  0% {
-    transform: translateX(0);
+/* RESPONSIVE: DESKTOP */
+@media (min-width: 768px) {
+  .der_contenedor {
+    right: 3dvw;
+    bottom: 3dvh;
+    min-width: 450px;
+    max-width: 550px;
   }
-  25% {
-    transform: translateX(-3px);
+  
+  .der_contenedor:hover {
+    max-height: 75dvh;
+    cursor: pointer;
   }
-  50% {
-    transform: translateX(3px);
-  }
-  75% {
-    transform: translateX(-2px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.der_tipos p:nth-child(3):hover {
-  animation: bounce 0.4s ease infinite;
-}
-
-@keyframes bounce {
-  0% {
+  
+  .der_contenedor:hover .der_tipos {
+    opacity: 1;
     transform: translateY(0);
   }
-  30% {
-    transform: translateY(-8px);
-  }
-  60% {
-    transform: translateY(4px);
-  }
-  100% {
-    transform: translateY(0);
+  
+  .der_precios {
+    flex-direction: row;
   }
 }
 
-.der_1_img span {
-  color: crimson;
-  text-shadow: 1px 1px 2px black;
-  font-size: clamp(5rem, 3dvw, 10rem);
+/* RESPONSIVE: MÓVIL */
+@media (max-width: 767px) {
+  .der_contenedor {
+    right: auto;
+    left: 20dvw;
+    bottom: auto;
+    top: 60dvh;
+    width: calc(75dvw - 3rem);
+    max-width: none;
+    max-height: 25dvh;
+  }
+  
+  .der_contenedor.expandido {
+    max-height: 35dvh;
+  }
+  
+  .der_precios {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .der_titulo {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .der_tabla_titulo {
+    font-size: 1rem;
+  }
+  
+  .der_precio_item {
+    font-size: 0.9rem;
+  }
+  
+  .der_tipos_titulo {
+    font-size: 1.1rem;
+  }
+  
+  .der_tipo_item {
+    font-size: 0.85rem;
+  }
+}
+
+/* RESPONSIVE: MÓVIL PEQUEÑO */
+@media (max-width: 480px) {
+  .der_contenedor {
+    left: 15dvw;
+    top: 55dvh;
+    width: calc(80dvw - 2rem);
+    padding: 1rem 1.5rem;
+  }
+  
+  .der_titulo {
+    font-size: 1.8rem;
+  }
 }
 
 /*abajo__abajo*/
