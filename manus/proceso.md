@@ -1082,3 +1082,167 @@ Se han implementado todos los cambios propuestos en el análisis exhaustivo, inc
 
 **Fin de la implementación** - 22 de enero de 2026, 07:30h GMT+1
 
+
+
+---
+
+## 📅 22 de enero de 2026 - 08:00h GMT+1
+
+### Título: Correcciones post-implementación y guía de traspaso
+
+---
+
+## 🎯 Sinopsis
+
+Se han corregido problemas con la visualización de la derecha, añadido scroll suave a izquierda, creado todo.md con tareas pendientes y guía completa de traspaso del backend a cliente.
+
+---
+
+## 🐛 Problemas encontrados y soluciones
+
+### Problema 1: La derecha no se veía
+
+**Causa:** El `.der_layout` y `.der_imagen` no tenían `position: absolute` y la imagen de fondo no estaba definida en el CSS.
+
+**Solución:**
+- Añadido `position: absolute` a `.der_layout`
+- Añadido `position: absolute` a `.der_imagen`
+- Añadida imagen de fondo directamente en CSS: `background-image: url('img/derecha_2.webp')`
+- El JavaScript puede sobrescribirla si se cambia en data.json
+
+**Archivos modificados:**
+- `style.css` (líneas 340-362)
+
+### Problema 2: Faltaba transición suave en scroll de izquierda
+
+**Solución:**
+- Añadido `scroll-behavior: smooth;` a `.lista_libros`
+- Ahora cuando haces click en un enlace del índice, el scroll se mueve suavemente
+
+**Archivos modificados:**
+- `style.css` (línea 231)
+
+---
+
+## 📝 Archivos creados
+
+### 1. todo.md
+
+Lista completa de tareas pendientes organizadas por prioridad:
+
+- 🔴 **Crítico:** SEO (Google Search Console, My Business, Analytics), Structured Data
+- 🟡 **Medio:** Validación del feed, sanitización HTML, formulario de contacto
+- 🟢 **Bajo:** Performance (WebP, lazy loading), contenido (FAQ, testimonios), accesibilidad
+
+**Ubicación:** `/todo.md`
+
+### 2. txt/guia_traspaso_backend.md
+
+Guía completa de 400+ líneas para traspasar toda la infraestructura a cliente:
+
+**Contenido:**
+1. Resumen ejecutivo
+2. Requisitos previos
+3. Crear cuenta de GitHub del cliente
+4. Transferir el repositorio (2 opciones)
+5. Configurar GitHub Actions
+6. Crear cuenta de Render
+7. Desplegar el backend en Render
+8. Actualizar la URL del feed
+9. Verificación final
+10. Troubleshooting (5 problemas comunes)
+11. Mantenimiento futuro
+12. Glosario
+13. Checklist final
+
+**Características:**
+- Paso a paso con screenshots mentales
+- Troubleshooting detallado
+- Glosario para no técnicos
+- Checklist de verificación
+- Instrucciones de mantenimiento
+
+**Ubicación:** `/txt/guia_traspaso_backend.md`
+
+---
+
+## 🔧 Cambios técnicos
+
+### style.css
+
+**Líneas 340-362:** Layout de derecha corregido
+```css
+.der_layout {
+  position: absolute;  /* AÑADIDO */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* ... */
+}
+
+.der_imagen {
+  position: absolute;  /* AÑADIDO */
+  top: 0;
+  left: 0;
+  background-image: url('img/derecha_2.webp');  /* AÑADIDO */
+  /* ... */
+}
+```
+
+**Línea 231:** Scroll suave en izquierda
+```css
+.lista_libros {
+  /* ... */
+  scroll-behavior: smooth;  /* AÑADIDO */
+}
+```
+
+---
+
+## 📊 Resumen de cambios
+
+### Archivos modificados (1)
+- `style.css` - Correcciones de derecha y scroll suave
+
+### Archivos creados (2)
+- `todo.md` - Lista de tareas pendientes
+- `txt/guia_traspaso_backend.md` - Guía completa de traspaso
+
+### Carpetas creadas (1)
+- `txt/` - Para documentación de traspaso
+
+---
+
+## ✅ Verificación
+
+- [x] La derecha ahora se ve correctamente
+- [x] La imagen de fondo se muestra
+- [x] El contenedor crimson está posicionado correctamente
+- [x] El scroll de izquierda es suave al hacer click en enlaces
+- [x] todo.md creado con todas las tareas pendientes
+- [x] Guía de traspaso completa y detallada
+
+---
+
+## 💡 Notas para el cliente
+
+### Cómo usar todo.md
+
+1. Abrir `todo.md` en GitHub
+2. Marcar tareas completadas cambiando `[ ]` por `[x]`
+3. Priorizar según necesidades:
+   - 🔴 Crítico: Hacer primero (SEO básico)
+   - 🟡 Medio: Hacer cuando puedas
+   - 🟢 Bajo: Mejoras progresivas
+
+### Cómo usar la guía de traspaso
+
+1. Leer el **Resumen ejecutivo** para entender el proceso
+2. Seguir los pasos en orden
+3. Usar el **Troubleshooting** si hay problemas
+4. Guardar las URLs finales en lugar seguro
+
+---
+
+**Fin de las correcciones** - 22 de enero de 2026, 08:15h GMT+1
