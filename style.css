@@ -145,6 +145,11 @@ h2 {
   animation: colorFade 5s infinite alternate ease-in-out;
 }
 
+.animate-e_inv {
+  /* Misma animación, pero en fase invertida */
+  animation: colorFade 5s infinite alternate-reverse ease-in-out;
+}
+
 @keyframes colorFade {
   from {
     color: white;
@@ -223,7 +228,7 @@ h2 {
 .lista_libros {
   display: flex;
   flex-direction: column;
-  height: 40dvh;
+  height: 60dvh;
   gap: 1dvw;
   overflow-y: auto; /* scroll vertical */
   overflow-x: clip; /* scroll vertical */
