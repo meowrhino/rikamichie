@@ -41,8 +41,7 @@ function generarTablaPrecios(datos) {
   const items = datos.opciones
     .map(opcion => `
       <div class="der_precio_item">
-        <span class="der_precio_duracion">${opcion.duracion}</span>
-        <span class="der_precio_valor">${opcion.precio}</span>
+        <span class="der_precio_texto">${opcion.duracion}: ${opcion.precio}</span>
       </div>
     `)
     .join("");

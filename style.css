@@ -128,16 +128,23 @@ h2 {
 }
 
 /* 2) A la imagen: ocupa todo el ancho del wrapper, 
-      pero siempre entre 50px y 400px, ideal 30dvw */
+      en móvil usa 30dvw (entre 50px y 300px) */
 .inguma img {
   display: block;
   width: 100%;
-  max-width: clamp(50px, 30dvw, 400px);
+  max-width: clamp(70px, 40dvw, 300px);
   height: auto; /* conserva proporción */
 
   position: absolute;
-  bottom: 0%;
-  right: 0%;
+  bottom: 0;
+  right: 0;
+}
+
+@media (min-width: 768px) {
+  .inguma img {
+    max-width: clamp(50px, 30dvh, 300px);
+    right: 5dvw;
+  }
 }
 
 .animate-e {
@@ -367,36 +374,38 @@ h2 {
   background-repeat: no-repeat;
 }
 
+/* Bloque de contenido */
+.der_bloque {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
 /* Contenedor crimson */
 .der_contenedor {
-  position: absolute;
-  right: 2dvw;
-  bottom: 2dvh;
   background-color: crimson;
   color: white;
   padding: 1.5rem 2rem;
-  font-family: serif;
+  font-family: inherit;
+  text-align: left;
   
   /* Transición muy suave */
-  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              padding 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+  transition: padding 0.6s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* Estado inicial: cerrado */
-  max-height: 35dvh;
-  overflow: hidden;
   
   /* Sombra sutil */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   
-  /* Esquinas redondeadas suaves */
-  border-radius: 8px;
+  /* Sin esquinas redondeadas */
+  border-radius: 0;
 }
 
 /* Estado expandido */
 .der_contenedor.expandido {
-  max-height: 75dvh;
-  overflow-y: auto;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
@@ -421,11 +430,12 @@ h2 {
 
 /* Título principal */
 .der_titulo {
-  margin: 0 0 1.5rem 0;
+  margin: 0;
   font-size: 2.5rem;
   font-weight: normal;
-  text-align: center;
+  text-align: left;
   letter-spacing: 0.05em;
+  line-height: 1;
 }
 
 .der_titulo a {
@@ -441,9 +451,27 @@ h2 {
 /* Contenedor de tablas de precios */
 .der_precios {
   display: flex;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
   flex-direction: row;
+}
+
+/* Texto de llamada */
+.der_ver_tipos {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  text-transform: lowercase;
+  opacity: 0.85;
+  max-height: 2rem;
+  transition: opacity 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
+}
+
+.der_contenedor.expandido .der_ver_tipos {
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 /* Cada tabla de precios */
@@ -457,7 +485,7 @@ h2 {
   margin: 0 0 1rem 0;
   font-size: 1.1rem;
   font-weight: bold;
-  text-align: center;
+  text-align: left;
   text-transform: lowercase;
   opacity: 0.95;
 }
@@ -466,57 +494,46 @@ h2 {
 .der_tabla_items {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.35rem;
 }
 
 /* Cada fila de precio */
 .der_precio_item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: block;
   font-size: 1rem;
-  padding: 0.3rem 0;
+  padding: 0.1rem 0;
 }
 
-/* Separador entre duración y precio */
-.der_precio_item::after {
-  content: '';
-  flex: 1;
-  margin: 0 0.5rem;
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
-  min-width: 10px;
-}
-
-.der_precio_duracion {
+.der_precio_texto {
   white-space: nowrap;
-}
-
-.der_precio_valor {
-  white-space: nowrap;
-  font-weight: 500;
 }
 
 /* Sección de tipos de masaje */
 .der_tipos {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 2px solid rgba(255, 255, 255, 0.3);
-  
-  /* Animación de aparición suave */
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  max-height: 0;
+  overflow: hidden;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: max-height 0.6s ease, opacity 0.6s ease, transform 0.6s ease,
+              margin-top 0.6s ease, padding-top 0.6s ease;
 }
 
 /* Cuando el contenedor está expandido, mostrar tipos */
 .der_contenedor.expandido .der_tipos {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 0;
+  max-height: 100dvh;
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Título de tipos */
 .der_tipos_titulo {
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.6rem 0;
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: lowercase;
@@ -526,12 +543,12 @@ h2 {
 .der_tipos_lista {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.4rem;
 }
 
 /* Cada tipo de masaje */
 .der_tipo_item {
-  line-height: 1.5;
+  line-height: 1.3;
   font-size: 0.95rem;
 }
 
@@ -548,14 +565,11 @@ h2 {
 /* RESPONSIVE: DESKTOP */
 @media (min-width: 768px) {
   .der_contenedor {
-    right: 3dvw;
-    bottom: 3dvh;
     min-width: 450px;
     max-width: 550px;
   }
   
   .der_contenedor:hover {
-    max-height: 75dvh;
     cursor: pointer;
   }
   
@@ -567,22 +581,28 @@ h2 {
   .der_precios {
     flex-direction: row;
   }
+
+  .der_tabla_precios:first-child {
+    flex: 3 1 0;
+  }
+
+  .der_tabla_precios:last-child {
+    flex: 2 1 0;
+  }
 }
 
 /* RESPONSIVE: MÓVIL */
 @media (max-width: 767px) {
-  .der_contenedor {
-    right: auto;
-    left: 20dvw;
-    bottom: auto;
-    top: 60dvh;
-    width: calc(75dvw - 3rem);
-    max-width: none;
-    max-height: 25dvh;
+  .der_bloque {
+    right: 0;
+    bottom: 0;
+    left: auto;
+    top: auto;
   }
   
-  .der_contenedor.expandido {
-    max-height: 35dvh;
+  .der_contenedor {
+    width: calc(75dvw - 3rem);
+    max-width: none;
   }
   
   .der_precios {
@@ -592,7 +612,7 @@ h2 {
   
   .der_titulo {
     font-size: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
   
   .der_tabla_titulo {
@@ -615,8 +635,6 @@ h2 {
 /* RESPONSIVE: MÓVIL PEQUEÑO */
 @media (max-width: 480px) {
   .der_contenedor {
-    left: 15dvw;
-    top: 55dvh;
     width: calc(80dvw - 2rem);
     padding: 1rem 1.5rem;
   }
