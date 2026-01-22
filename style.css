@@ -158,11 +158,29 @@ h2 {
 }
 
 @keyframes colorFade {
-  from {
-    color: white;
+  0% {
+    color: #ffffff;
   } /* inicio en blanco */
-  to {
-    color: red;
+  35% {
+    color: #ffffff;
+  }
+  45% {
+    color: #fff2f2;
+  }
+  55% {
+    color: #ffd6d6;
+  }
+  65% {
+    color: #ffb3b3;
+  }
+  75% {
+    color: #ff8c8c;
+  }
+  85% {
+    color: #ff5c5c;
+  }
+  100% {
+    color: #ff0000;
   } /* acaba en rojo */
 }
 
