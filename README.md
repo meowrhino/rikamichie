@@ -6,7 +6,7 @@ Sistema de navegación web basado en grids configurables con contenido editable 
 
 - **Grid flexible**: Define cualquier layout mediante una matriz bidimensional
 - **Navegación intuitiva**: Botones direccionales que se generan automáticamente
-- **Contenido editable**: Todo el contenido se gestiona desde `data.json`
+- **Contenido editable**: Todo el contenido se gestiona desde `data/site.json` (para Erika: [GUIA.md](GUIA.md); traspaso: [TRASPASO.md](TRASPASO.md); si el build falla: [CLAUDE.md](CLAUDE.md))
 - **Modular**: Cada sección tiene su propio script y puede funcionar independientemente
 - **Responsive**: Se adapta a diferentes tamaños de pantalla
 
@@ -14,7 +14,9 @@ Sistema de navegación web basado en grids configurables con contenido editable 
 
 ```
 rikamichie/
-├── data.json              # Configuración de todo el contenido editable
+├── data/site.json         # Todo el contenido editable (schema/site.json dice los campos)
+├── build/build.mjs        # → dist/: revisa el JSON, escribe lo que se lee sin JS y la og (sharp)
+├── build/feed.mjs         # trae el blog de Substack a feed.json (la Action, cada domingo)
 ├── index.html             # Punto de entrada
 ├── script.js              # Sistema principal de grid y navegación
 ├── style.css              # Estilos globales y por sección
@@ -84,93 +86,25 @@ const grid = [
 ];
 ```
 
-## 📝 Configuración del contenido (data.json)
+## 📝 Configuración del contenido (data/site.json)
 
-Todo el contenido editable está centralizado en `data.json`:
+Todo el contenido editable está en `data/site.json`, con los nombres de la casa (en inglés);
+`script/house.js` lo pasa a la forma del `data.json` de antes (`arriba`, `abajo`, `derecha`,
+`izquierda`), que es la que leen los scripts de cada sección. Qué lleva cada campo:
+`schema/site.json` (VS Code lo enseña al pasar el ratón) y [GUIA.md](GUIA.md).
 
-### Estructura general
+| en `data/site.json` | sección | script |
+|---|---|---|
+| `links` | arriba: las cosas hechas | `script/arriba.js` |
+| `records` | abajo: el carrusel de discos | `script/carrusel.js` |
+| `massages` | derecha: masajes y precios | `script/derecha.js` |
+| `editorial` | izquierda: el texto | `script/izquierda.js` |
 
-```json
-{
-  "arriba": { ... },      // Timeline de eventos
-  "abajo": { ... },       // Carrusel de discos
-  "derecha": { ... },     // Información de servicios
-  "izquierda": { ... }    // Texto introductorio
-}
-```
+El blog (`feed.json`) lo trae `build/feed.mjs` de Substack cada domingo (Action
+`update-feed.yml`), y al subirlo se vuelve a publicar la web.
 
-### Sección ARRIBA: Timeline de eventos
-
-```json
-"arriba": {
-  "links": [
-    {
-      "titulo": "Nombre del evento",
-      "link": "https://url-del-evento.com",
-      "fecha": "2024-10"
-    }
-  ]
-}
-```
-
-### Sección ABAJO: Carrusel de discos
-
-```json
-"abajo": {
-  "discos": [
-    {
-      "image": "./img/disco1.jpg",
-      "caption": "Título del disco",
-      "bgColor": "#000",
-      "btnColor": "#f00",
-      "link": "https://enlace-al-disco.com"
-    }
-  ]
-}
-```
-
-### Sección DERECHA: Información de servicios
-
-```json
-"derecha": {
-  "imagen": {
-    "url": "img/derecha.jpg",
-    "alt": "Descripción de la imagen"
-  },
-  "colores": {
-    "themeColor": "crimson",
-    "btnColor": "crimson",
-    "textoColor": "white",
-    "fondoTexto": "crimson"
-  },
-  "contenido": {
-    "linkPrincipal": {
-      "texto": "masajes",
-      "url": "https://www.instagram.com/..."
-    },
-    "tipos": ["tipo1", "tipo2", "tipo3"],
-    "precio": "44€/h"
-  }
-}
-```
-
-### Sección IZQUIERDA: Texto introductorio
-
-```json
-"izquierda": {
-  "texto": {
-    "parrafo1": "Primer párrafo de texto",
-    "parrafo2": "Segundo párrafo con <a href='...'>enlaces</a>"
-  },
-  "colores": {
-    "bgColor": "black",
-    "textColor": "Gainsboro",
-    "themeColor": "black",
-    "text2Color": "red",
-    "btnColor": "red"
-  }
-}
-```
+En la vista previa (Live Server, sin build), `script/carga.js` revisa el JSON con su esquema y
+enseña en pantalla lo que esté mal, como el build.
 
 ## 🔧 Cómo añadir una nueva celda
 
@@ -208,19 +142,14 @@ Todo el contenido editable está centralizado en `data.json`:
    }
    ```
 
-6. **Añadir datos** en `data.json`:
-   ```json
-   "nueva_seccion": {
-     "contenido": "..."
-   }
-   ```
+6. **Añadir datos** en `data/site.json` (y su campo en `schema/site.json` y `script/house.js`).
 
 ## 🚀 Uso
 
 1. Clona el repositorio
-2. Edita `data.json` con tu contenido
+2. Edita `data/site.json` con tu contenido
 3. Personaliza el grid en `script.js` si quieres cambiar el layout
-4. Abre `index.html` en tu navegador
+4. Live Server sobre la carpeta (la vista previa); la web tal cual se publica: `npm ci && node build/build.mjs` → `dist/`
 
 ## 🎨 Personalización de estilos
 

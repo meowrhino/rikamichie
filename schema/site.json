@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "data/site.json: la web",
+  "description": "data/site.json: todo lo que se cambia de la web, sección por sección. VS Code lee este fichero (por el \"$schema\" de arriba del JSON) para autocompletar, explicar cada campo y subrayar lo que está mal; el build y la vista previa lo usan para revisar.",
+  "type": "object",
+  "required": ["links", "records", "massages", "editorial"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "_": { "type": "string" },
+    "url": { "type": "string", "pattern": "^https://", "description": "El dominio, sin barra al final: \"https://rikamichie.com\". Con él, Google indexa la web." },
+    "links": {
+      "type": "array", "description": "Arriba: la lista de cosas hechas, en orden.",
+      "items": { "type": "object", "additionalProperties": false, "required": ["title", "url"], "properties": {
+        "title": { "type": "string", "description": "Lo que pone." },
+        "url": { "type": "string", "description": "A dónde lleva: \"https://…\"" },
+        "date": { "type": "string", "description": "Mes y año: \"03-2019\". Puede ir vacío." }
+      } }
+    },
+    "records": {
+      "type": "array", "description": "Abajo: el carrusel de discos, en orden.",
+      "items": { "type": "object", "additionalProperties": false, "required": ["image", "caption", "url"], "properties": {
+        "image": { "type": "string", "description": "La portada: \"img/disco1.jpg\"" },
+        "caption": { "type": "string", "description": "El título." },
+        "bgColor": { "type": "string", "description": "El color de fondo: \"#000\"" },
+        "btnColor": { "type": "string", "description": "El color de los botones: \"#f00\"" },
+        "url": { "type": "string", "description": "A dónde lleva." }
+      } }
+    },
+    "massages": {
+      "type": "object", "additionalProperties": false, "required": ["image", "title", "prices", "types"],
+      "description": "Derecha: los masajes.",
+      "properties": {
+        "image": { "type": "string", "description": "La foto: \"img/derecha_2.webp\"" },
+        "title": { "type": "string", "description": "El título: \"masajes\"" },
+        "instagram": { "type": "string", "description": "A dónde lleva el título." },
+        "prices": {
+          "type": "object", "additionalProperties": false, "required": ["studio", "home"],
+          "description": "Las dos tablas de precios: en el estudio y a domicilio.",
+          "properties": {
+            "studio": { "$ref": "#/$defs/prices" },
+            "home": { "$ref": "#/$defs/prices" }
+          }
+        },
+        "types": {
+          "type": "object", "additionalProperties": false, "required": ["title", "list"],
+          "properties": {
+            "title": { "type": "string", "description": "\"tipos de masaje:\"" },
+            "list": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["name"], "properties": {
+              "name": { "type": "string" }, "text": { "type": "string", "description": "Para qué es (puede ir vacío)." }
+            } } }
+          }
+        }
+      }
+    },
+    "editorial": { "type": "array", "items": { "type": "string" }, "description": "Izquierda: el texto, un párrafo por línea. Se puede poner <a href=\"mailto:…\">un enlace</a>." }
+  },
+  "$defs": {
+    "prices": {
+      "type": "object", "additionalProperties": false, "required": ["title", "options"],
+      "properties": {
+        "title": { "type": "string", "description": "\"carrer poeta cabanyes\"" },
+        "options": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["duration", "price"], "properties": {
+          "duration": { "type": "string", "description": "\"1h\"" }, "price": { "type": "string", "description": "\"44€\"" }
+        } } }
+      }
+    }
+  }
+}

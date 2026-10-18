@@ -1,10 +1,15 @@
-# .github/workflows/update_feed_html.yml
+# Cada domingo trae el blog de Erika (Substack) a feed.json y lo sube; eso
+# dispara la Action de publicar (deploy.yml), que regenera la web.
+# Antes se lo pedía a un servidor en Render; ahora lo hace build/feed.mjs aquí.
 name: Actualizar feed JSON domingo a las 12 UTC
 
 on:
   schedule:
     - cron: '0 12 * * 0'  # cada domingo a las 12:00 UTC
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   actualizar-feed:
@@ -13,9 +18,11 @@ jobs:
       - name: Checkout del repo
         uses: actions/checkout@v4
 
-      - name: Descargar feed HTML desde Render
-        run: |
-          curl -s https://blog-scrapper-jmsb.onrender.com/feed > feed.json
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+
+      - name: Traer el feed de Substack
+        run: npm ci && node build/feed.mjs
 
       - name: Commit y push si hay cambios
         run: |

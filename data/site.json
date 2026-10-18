@@ -1,0 +1,153 @@
+{
+  "$schema": "../schema/site.json",
+  "url": "https://rikamichie.com",
+  "links": [
+    {
+      "title": "MIRA QUE MIRA",
+      "url": "https://www.youtube.com/watch?v=3L012m96DdU",
+      "date": "03-2019"
+    },
+    {
+      "title": "carmela palomo",
+      "url": "https://www.youtube.com/watch?v=rHIfbS4QwUg",
+      "date": "05-2019"
+    },
+    {
+      "title": "Perro Le Fou",
+      "url": "https://www.youtube.com/watch?v=NAPxFNibsaQ",
+      "date": "11-2019"
+    },
+    {
+      "title": "Il trionfo del nuovo Cesare",
+      "url": "https://www.youtube.com/watch?v=m8H0O43Uduk",
+      "date": "11-2019"
+    },
+    {
+      "title": "POV: eres mi portátil mientras me preparo y llego tarde a una cita a la que no quiero ir",
+      "url": "https://www.youtube.com/watch?v=C4E4N9Znyp4",
+      "date": "12-2019"
+    },
+    {
+      "title": "agradecida no se está mejor",
+      "url": "https://www.youtube.com/watch?v=glbk4lkJv9c",
+      "date": "12-2019"
+    },
+    {
+      "title": "como en las pelis la vida (piloto)",
+      "url": "https://www.youtube.com/watch?v=WjD2wumeiWo",
+      "date": "09-2025"
+    },
+    {
+      "title": "pingu tiene celos de pinga",
+      "url": "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
+      "date": "11-2025"
+    },
+    {
+      "title": "pitch película PerceVal",
+      "url": "https://www.youtube.com/watch?v=kfmP0C3JkzI",
+      "date": "01-2026"
+    },
+    {
+      "title": "soundcloud rikamichie",
+      "url": "https://soundcloud.com/user-612675776-253813774",
+      "date": ""
+    }
+  ],
+  "records": [
+    {
+      "image": "img/disco1.jpg",
+      "caption": "cançons d'amor i de mort",
+      "bgColor": "#000",
+      "btnColor": "#f00",
+      "url": "https://ejemplo.com/disco1"
+    },
+    {
+      "image": "img/disco2.jpg",
+      "caption": "cat pop",
+      "bgColor": "#00f",
+      "btnColor": "#fff",
+      "url": "https://ejemplo.com/disco2"
+    },
+    {
+      "image": "img/disco3.jpg",
+      "caption": "sanson i dalila",
+      "bgColor": "#f0f",
+      "btnColor": "#fff",
+      "url": "https://ejemplo.com/disco3"
+    }
+  ],
+  "massages": {
+    "image": "img/derecha_2.webp",
+    "title": "masajes",
+    "instagram": "https://www.instagram.com/manosdemichi/",
+    "prices": {
+      "studio": {
+        "title": "carrer poeta cabanyes",
+        "options": [
+          {
+            "duration": "1h",
+            "price": "44€"
+          },
+          {
+            "duration": "2h",
+            "price": "77€"
+          },
+          {
+            "duration": "3h",
+            "price": "111€"
+          }
+        ]
+      },
+      "home": {
+        "title": "a domicilio",
+        "options": [
+          {
+            "duration": "1h",
+            "price": "66€"
+          },
+          {
+            "duration": "2h",
+            "price": "99€"
+          },
+          {
+            "duration": "3h",
+            "price": "144€"
+          }
+        ]
+      }
+    },
+    "types": {
+      "title": "tipos de masaje:",
+      "list": [
+        {
+          "name": "descontracturante",
+          "text": "para dolores profundos"
+        },
+        {
+          "name": "relajante",
+          "text": "para calmar tu mente y tu cuerpo"
+        },
+        {
+          "name": "deportivo",
+          "text": "para cuerpos trabajados"
+        },
+        {
+          "name": "neurosedante",
+          "text": "para la zona craneal"
+        },
+        {
+          "name": "drenaje linfático",
+          "text": "para retención de líquidos"
+        },
+        {
+          "name": "reflexología podal",
+          "text": ""
+        }
+      ]
+    }
+  },
+  "editorial": [
+    "si quieres montar una editorial para esquizofrénicos yo te consigo los textos",
+    "enviame tu manuscrito!!! <a href=\"mailto:rikamichie@gmail.com\" target=\"_blank\" rel=\"noopener noreferrer\">rikamichie@gmail.com</a>"
+  ]
+}

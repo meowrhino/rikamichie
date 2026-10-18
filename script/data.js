@@ -1,8 +1,10 @@
 // ============================================
-// MÓDULO COMPARTIDO - Carga de data.json
+// MÓDULO COMPARTIDO - Carga de los datos (data/site.json)
 // ============================================
 
-// Caché global de data.json
+import { loadSite } from './carga.js';
+
+// Caché global de los datos
 let dataCache = null;
 let dataPromise = null;
 
@@ -22,20 +24,14 @@ export async function loadData() {
   }
   
   // Hacer la petición y cachearla
-  dataPromise = fetch('./data.json')
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Error al cargar data.json');
-      }
-      return response.json();
-    })
+  dataPromise = loadSite() // data/site.json → la forma de antes (script/carga.js)
     .then((data) => {
       dataCache = data;
-      console.log('✅ data.json cargado y cacheado');
+      console.log('✅ datos cargados y cacheados');
       return data;
     })
     .catch((error) => {
-      console.error('❌ Error cargando data.json:', error);
+      console.error('❌ Error cargando los datos:', error);
       dataPromise = null; // Resetear para permitir reintentos
       throw error;
     });
