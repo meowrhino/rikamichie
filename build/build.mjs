@@ -90,7 +90,7 @@ ${site.editorial.map((p) => `        <p>${p}</p>`).join('\n')}
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
-for (const f of ['style.css', 'script.js', 'script', 'paginas', 'img', 'data', 'feed.json']) cpSync(at(f), join(OUT, f), { recursive: true, filter: (x) => !x.endsWith('.DS_Store') });
+for (const f of ['style.css', 'script.js', 'script', 'paginas', 'img', 'fonts', 'data', 'feed.json']) cpSync(at(f), join(OUT, f), { recursive: true, filter: (x) => !x.endsWith('.DS_Store') });
 writeFileSync(join(OUT, 'index.html'), html);
 if (og) { mkdirSync(join(OUT, 'og'), { recursive: true }); cpSync(og, join(OUT, 'og', 'home.jpg')); }
 writeFileSync(join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
