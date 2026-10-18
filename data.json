@@ -1,11 +1,58 @@
 {
   "arriba": {
     "links": [
+      
       {
-        "titulo": "Ofrena Musical con Pol Roig",
+        "titulo": "MIRA QUE MIRA",
+        "link": "https://www.youtube.com/watch?v=3L012m96DdU",
+        "fecha": "03-2019"
+      },
+      {
+        "titulo": "carmela palomo",
+        "link": "https://www.youtube.com/watch?v=rHIfbS4QwUg",
+        "fecha": "05-2019"
+      },
+      {
+        "titulo": "Perro Le Fou",
+        "link": "https://www.youtube.com/watch?v=NAPxFNibsaQ",
+        "fecha": "11-2019"
+      },
+      {
+        "titulo": "Il trionfo del nuovo Cesare",
+        "link": "https://www.youtube.com/watch?v=m8H0O43Uduk",
+        "fecha": "11-2019"
+      },
+      {
+        "titulo": "POV: eres mi portátil mientras me preparo y llego tarde a una cita a la que no quiero ir",
+        "link": "https://www.youtube.com/watch?v=C4E4N9Znyp4",
+        "fecha": "12-2019"
+      },
+      {
+        "titulo": "agradecida no se está mejor",
+        "link": "https://www.youtube.com/watch?v=glbk4lkJv9c",
+        "fecha": "12-2019"
+      },
+      {
+        "titulo": "como en las pelis la vida (piloto)",
+        "link": "https://www.youtube.com/watch?v=WjD2wumeiWo",
+        "fecha": "09-2025"
+      },
+      {
+        "titulo": "pingu tiene celos de pinga",
         "link": "https://graf.cat/events/event/ofrena-musical-pol-roig-i-erika-michi/",
-        "fecha": "2024-10"
+        "fecha": "11-2025"
+      },
+       {
+        "titulo": "pitch película PerceVal",
+        "link": "https://www.youtube.com/watch?v=kfmP0C3JkzI",
+        "fecha": "01-2026"
+      },
+      {
+        "titulo": "soundcloud rikamichie",
+        "link": "https://soundcloud.com/user-612675776-253813774",
+        "fecha": ""
       }
+
     ]
   },
 
@@ -39,7 +86,7 @@
     "imagen": "img/derecha_2.webp",
     "titulo": {
       "texto": "masajes",
-      "url": "https://www.instagram.com/erikamichi/"
+      "url": "https://www.instagram.com/manosdemichi/"
     },
     "precios": {
       "poetaCabanyes": {
@@ -53,7 +100,7 @@
       "domicilio": {
         "titulo": "a domicilio",
         "opciones": [
-          { "duracion": "1h", "precio": "55€" },
+          { "duracion": "1h", "precio": "66€" },
           { "duracion": "2h", "precio": "99€" },
           { "duracion": "3h", "precio": "144€" }
         ]
