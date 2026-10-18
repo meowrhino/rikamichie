@@ -49,6 +49,9 @@ Tiempo: unos 15 minutos. Para Erika cambia el fichero: de `data.json` a
 
 ## 4. Erika en su ordenador
 
+- [ ] El tercer disco (*sanson i dalila*) todavía enlaza a `ejemplo.com`: pedirle su enlace de
+      Spotify (los otros dos ya van a sus álbumes).
+
 - [ ] **Sincronizar** (la estructura cambia) y un cambio pequeño siguiendo [GUIA.md](GUIA.md).
 
 ## 5. Al acabar
