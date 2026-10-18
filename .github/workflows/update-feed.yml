@@ -1,6 +1,7 @@
 # Cada domingo trae el blog de Erika (Substack) a feed.json y lo sube; eso
 # dispara la Action de publicar (deploy.yml), que regenera la web.
-# Antes se lo pedía a un servidor en Render; ahora lo hace build/feed.mjs aquí.
+# Se lo pide a un servidor en Render (index.js): Substack contesta 403 a las
+# máquinas de GitHub, también con cabecera de navegador (probado el 2026-10-18).
 name: Actualizar feed JSON domingo a las 12 UTC
 
 on:
@@ -18,11 +19,12 @@ jobs:
       - name: Checkout del repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with: { node-version: '22' }
-
-      - name: Traer el feed de Substack
-        run: npm ci && node build/feed.mjs
+      - name: Descargar el feed desde Render
+        run: |
+          curl -s --max-time 120 https://blog-scrapper-jmsb.onrender.com/feed > nuevo.json
+          # solo si ha llegado un feed con entradas: si no, se queda el de antes
+          node -e 'const f=JSON.parse(require("fs").readFileSync("nuevo.json","utf8")); if(!f.items?.length) process.exit(1)' \
+            && mv nuevo.json feed.json || { echo "el feed no ha llegado bien: se queda el de antes"; rm -f nuevo.json; }
 
       - name: Commit y push si hay cambios
         run: |

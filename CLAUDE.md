@@ -25,8 +25,8 @@ Cuando falla, la web se queda como estaba. Para arreglarlo:
      `schema/site.json`; se arregla el dato, no el esquema.
    - "no encuentro img/x": una foto que el JSON nombra y no está. Pregunta si falta
      subirla.
-   - Si falla `update-feed.yml` (el blog): Substack no ha respondido; se vuelve a probar
-     con `gh workflow run update-feed.yml`. El feed de antes se queda.
+   - El blog (`update-feed.yml`): si el servidor de Render no responde, el feed de
+     antes se queda; se vuelve a probar con `gh workflow run update-feed.yml`.
 4. **Comprueba**: `node build/build.mjs` sin ✗ (los ⚠ no paran nada).
 
 No cambies el build, `js/house.js` ni el resto del JS para que pase: si el dato

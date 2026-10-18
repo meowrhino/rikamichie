@@ -11,8 +11,9 @@ lo actualiza la Action). Lo que haya cambiado desde entonces hay que traerlo ant
 
 Las dos copias publican en GitHub Pages con la misma Action
 (`.github/workflows/deploy.yml`) y el build decide por el dueño del repo: en
-`meowrhino`, github.io sin indexar; en la suya, rikamichie.com. El feed ya no
-pasa por Render: `build/feed.mjs` lee Substack directamente.
+`meowrhino`, github.io sin indexar; en la suya, rikamichie.com. El feed sigue
+pasando por Render (Substack contesta 403 a GitHub), pero ya no pisa
+`feed.json` si llega vacío, y al subirlo se vuelve a publicar la web.
 
 Tiempo: unos 15 minutos. Para Erika cambia el fichero: de `data.json` a
 `data/site.json`, con los nombres en inglés (`links`, `records`, `massages`,
@@ -52,5 +53,4 @@ Tiempo: unos 15 minutos. Para Erika cambia el fichero: de `data.json` a
 
 ## 5. Al acabar
 
-- [ ] El servidor de Render (`blog-scrapper-jmsb`) ya no hace falta: se puede apagar.
 - [ ] Fila de rikamichie en `JAMstack/inventario.md` con las dos direcciones.

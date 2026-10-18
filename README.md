@@ -16,7 +16,6 @@ Sistema de navegación web basado en grids configurables con contenido editable 
 rikamichie/
 ├── data/site.json         # Todo el contenido editable (schema/site.json dice los campos)
 ├── build/build.mjs        # → dist/: revisa el JSON, escribe lo que se lee sin JS y la og (sharp)
-├── build/feed.mjs         # trae el blog de Substack a feed.json (la Action, cada domingo)
 ├── index.html             # Punto de entrada
 ├── script.js              # Sistema principal de grid y navegación
 ├── style.css              # Estilos globales y por sección
@@ -100,8 +99,8 @@ Todo el contenido editable está en `data/site.json`, con los nombres de la casa
 | `massages` | derecha: masajes y precios | `script/derecha.js` |
 | `editorial` | izquierda: el texto | `script/izquierda.js` |
 
-El blog (`feed.json`) lo trae `build/feed.mjs` de Substack cada domingo (Action
-`update-feed.yml`), y al subirlo se vuelve a publicar la web.
+El blog (`feed.json`) lo trae cada domingo la Action `update-feed.yml`, a través del servidor de
+Render (`index.js`: Substack contesta 403 a GitHub), y al subirlo se vuelve a publicar la web.
 
 En la vista previa (Live Server, sin build), `script/carga.js` revisa el JSON con su esquema y
 enseña en pantalla lo que esté mal, como el build.
